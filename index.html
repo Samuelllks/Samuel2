@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMUEL MENDES | FullStark Architect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyan: #00E5FF;
+            --purple: #7000FF;
+            --red: #FF2A55;
+            --dark: #030305;
+            --glass-bg: rgba(10, 15, 25, 0.75);
+            --glass-border: rgba(0, 229, 255, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--dark); color: #E0F7FA; font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden; position: relative; width: 100vw; height: 100vh;
+        }
+
+        /* =========================================
+           ESTILOS DA TELA DE BOOT (INTRO)
+           ========================================= */
+        #boot-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #000; color: var(--cyan);
+            font-family: 'Share Tech Mono', monospace; font-size: 0.9rem;
+            padding: 20px; z-index: 9999; overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+
+        #boot-loader {
+            border-left: 2px solid var(--cyan); padding-left: 10px;
+            box-shadow: -5px 0 15px rgba(0, 229, 255, 0.2);
+        }
+
+        .boot-line { margin-bottom: 4px; white-space: nowrap; overflow: hidden; }
+        .boot-line.ok { color: var(--cyan); }
+        .boot-line.warn { color: var(--purple); }
+        .boot-line.crit { color: var(--red); font-weight: bold; animation: blink 0.5s infinite; }
+        .boot-line.hl { color: #fff; text-shadow: 0 0 5px var(--cyan); }
+
+        .scan-bar { display: inline-block; width: 0; height: 10px; background-color: var(--cyan); animation: scanLoad 2s forwards; }
+
+        #final-stat { font-size: 1.5rem; color: #fff; margin-top: 20px; text-align: center; display: none;}
+
+        /* Cursor piscante */
+        #boot-cursor { display: inline-block; width: 8px; height: 15px; background-color: var(--cyan); animation: blink 0.8s infinite; vertical-align: middle;}
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes scanLoad { from { width: 0; } to { width: 100%; } }
+
+        /* Esconder o conteúdo principal no início */
+        #main-content { display: none; opacity: 0; transition: opacity 1s ease-in-out; width: 100%; height: 100%; overflow-y: auto; }
+
+        /* =========================================
+           ESTILOS DO CONTEÚDO PRINCIPAL
+           ========================================= */
+        .bg-mesh {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.08), transparent 40%),
+                        radial-gradient(circle at 85% 30%, rgba(112, 0, 255, 0.08), transparent 40%);
+            z-index: -2;
+        }
+
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: linear-gradient(var(--glass-border) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+            background-size: 40px 40px; z-index: -1; opacity: 0.2;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) scale(3);
+        }
+
+        .container {
+            max-width: 500px; margin: 0 auto; padding: 40px 20px 100px 20px;
+            display: flex; flex-direction: column; gap: 30px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border); border-radius: 16px; padding: 25px;
+            position: relative; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: 0.3s ease;
+        }
+
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; }
+        .hero-title {
+            font-size: 1.8rem; font-weight: 900; background: linear-gradient(90deg, var(--cyan), #fff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; letter-spacing: 2px;
+        }
+        .hero-subtitle { text-align: center; color: var(--purple); font-size: 1.1rem; font-weight: 600; letter-spacing: 4px; }
+
+        .section-title { font-size: 1.1rem; color: var(--cyan); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--cyan), transparent); }
+
+        .tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 10px; }
+        .tech-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .tech-item img { width: 32px; height: 32px; filter: drop-shadow(0 0 5px var(--cyan)); object-fit: contain; }
+        .tech-item span { font-size: 0.55rem; color: #81D4FA; font-family: 'Orbitron'; text-align: center; }
+
+        .project-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .project-item:last-child { border: none; }
+        .project-label { font-size: 0.65rem; color: var(--purple); text-transform: uppercase; letter-spacing: 2px; font-family: 'Orbitron'; display: block; margin-bottom: 4px; }
+        .project-name { color: var(--cyan); font-weight: 700; font-size: 1rem; font-family: 'Orbitron'; display: block; }
+        .project-desc { color: #aaa; font-size: 0.95rem; margin-top: 5px; line-height: 1.4; }
+
+        .exp-row { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
+        .exp-icon { color: var(--cyan); font-size: 1.3rem; }
+        .exp-info h4 { color: #fff; font-size: 1rem; }
+        .exp-info p { color: #888; font-size: 0.9rem; }
+
+        .action-group { display: flex; flex-direction: column; gap: 12px; }
+        .btn { text-decoration: none; padding: 16px; border-radius: 10px; font-family: 'Orbitron'; font-weight: 700; text-align: center; transition: 0.3s; }
+        .btn-primary { background: linear-gradient(90deg, var(--cyan), #0097A7); color: #000; }
+        .btn-social { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); color: var(--cyan); font-size: 0.85rem; }
+
+        .footer-ticker { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--dark); border-top: 1px solid var(--glass-border); padding: 10px 0; z-index: 1000; overflow: hidden; }
+        .ticker-track { display: flex; white-space: nowrap; animation: scroll 25s linear infinite; }
+        .ticker-track span { font-family: 'Orbitron'; font-size: 0.75rem; color: var(--purple); padding: 0 30px; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .vote-container { display: flex; justify-content: center; gap: 20px; margin-top: 10px; }
+        .vote-btn { background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: 50px; padding: 12px 25px; font-family: 'Orbitron'; color: #fff; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
+        .vote-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; }
+        .vote-msg { text-align: center; font-size: 0.8rem; margin-top: 10px; height: 15px; }
+    </style>
+</head>
+<body>
+
+    <div id="boot-screen" onclick="enableAudio()">
+        <div id="boot-loader">
+            </div>
+        <div id="final-stat">
+            [ <span style="color:var(--cyan)">ACESSO LIBERADO</span> ]
+        </div>
+        <p style="text-align: center; color: #444; font-size: 0.7rem; margin-top: auto;">(Clique na tela para ativar o som do terminal)</p>
+    </div>
+
+    <div id="main-content">
+        <div class="bg-mesh"></div>
+        <div class="bg-grid"></div>
+
+        <div class="container">
+            
+            <header>
+                <h1 class="hero-title">SAMUEL MENDES</h1>
+                <h2 class="hero-subtitle">SYSTEM ARCHITECT // FULLSTARK</h2>
+            </header>
+
+            <div class="glass-card">
+                <h2 class="section-title">REPUTAÇÃO NO CORE</h2>
+                <div class="vote-container">
+                    <button class="vote-btn" id="btnLike" onclick="registerVote('like')">
+                        <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                        <span id="likeCount">1240</span>
+                    </button>
+                    <button class="vote-btn" id="btnDislike" onclick="registerVote('dislike')">
+                        <svg viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg>
+                        <span id="dislikeCount">0</span>
+                    </button>
+                </div>
+                <div class="vote-msg" id="voteMsg"></div>
+            </div>
+
+            <div class="glass-card">
+                <h2 class="section-title">MANIFESTO</h2>
+                <p style="font-size: 1.1rem; line-height: 1.6; color: #B2EBF2; text-align: justify;">
+                    Como um desenvolvedor <strong>FullStark</strong>, eu não apenas escrevo código; eu projeto sistemas nervosos digitais. Minha atuação transcende as barreiras convencionais do desenvolvimento. Domino a jornada completa: da interface refinada ao hardware bruto, passando por arquiteturas de back-end indestrutíveis. Tenho um conhecimento amplo que funde <strong>segurança ofensiva, modelagem 3D e engenharia de software</strong>. Se o problema existe, eu construo a solução. Se a infraestrutura é complexa, eu a torno eficiente.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <h2 class="section-title">ARSENAL DE SINTAXES</h2>
+                <div class="tech-grid">
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg"><span>RUST</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"><span>PYTHON</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"><span>C++</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"><span>GOLANG</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"><span>JS/TS</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"><span>PHP</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"><span>JAVA</span></div>
+                    <div class="tech-item"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjMDAyNDRDIiBkPSJNMTE4LjEgMTEzLjNsLTU0LTEwMEwtOS45IDExMy4zaDEyOCIvPjxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik02NC4xIDMwLjZMMjMuMyAxMDcuMWgzOC4ybC4yLS40IDcuNy0xNC40IDcuNyAxNC40LjIgLjRoMzguMkw2NC4xIDMwLjZ6bTAgMjguOGwyMS42IDQwLjNINDIuNUw2NC4xIDU5LjR6Ii8+PC9zdmc+"><span>ADA</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lua/lua-original.svg"><span>LUA</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"><span>HTML5</span></div>
+                    <div class="tech-item"><img src="https://scratch.mit.edu/favicon.ico"><span>SCRATCH</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg"><span>SWIFT</span></div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2 class="section-title">SISTEMAS & TECNOLOGIAS</h2>
+                <div class="tech-grid">
+                    <div class="tech-item"><img src="https://www.kali.org/images/kali-logo.svg"><span>KALI LINUX</span></div>
+                    <div class="tech-item"><img src="https://raw.githubusercontent.com/termux/termux-app/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"><span>TERMUX</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"><span>GITHUB</span></div>
+                    <div class="tech-item"><img src="https://acode.foxdebug.com/favicon.ico"><span>ACODE</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"><span>VS CODE</span></div>
+                    <div class="tech-item"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBFNUZGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDJMMiA3bDEwIDUgMTAtNXoiLz48cGF0aCBkPSJNMiAxN2wxMCA1IDEwLTVtLTIwLTVsMTAgNSAxMC01Ii8+PC9zdmc+"><span>ZPHISHER</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/codepen/codepen-original.svg"><span>CODEPEN</span></div>
+                    <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg"><span>BLENDER</span></div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2 class="section-title">CORE PROJECTS</h2>
+                <div class="project-item">
+                    <span class="project-label">NETWORK</span>
+                    <span class="project-name">BRAK</span>
+                    <p class="project-desc">Hub de elite para eventos e networking tecnológico de alto impacto.</p>
+                </div>
+                <div class="project-item">
+                    <span class="project-label">SAMP</span>
+                    <span class="project-name">SOUTH ROLEPLAY</span>
+                    <p class="project-desc">Top 3 mundial em inovação. Economia e sistemas inéditos em tempo real.</p>
+                </div>
+                <div class="project-item">
+                    <span class="project-label">MINECRAFT</span>
+                    <span class="project-name">SERVIDOR SMT</span>
+                    <p class="project-desc">+80 plugins customizados e suporte para 400+ players simultâneos.</p>
+                </div>
+            </div>
+
+            <div class="glass-card" style="border-color: var(--purple);">
+                <h2 class="section-title" style="color: var(--purple);">FIELD EXPERIENCE</h2>
+                <div class="exp-row">
+                    <div class="exp-icon">🎨</div>
+                    <div class="exp-info">
+                        <h4>Blender 3D Modeling</h4>
+                        <p>Escultura digital e criação de assets complexos para integração em engines e projetos visuais.</p>
+                    </div>
+                </div>
+                <div class="exp-row">
+                    <div class="exp-icon">🛡️</div>
+                    <div class="exp-info">
+                        <h4>Cyber Segurança</h4>
+                        <p>Auditorias ofensivas e análise de vulnerabilidades em sistemas de missão crítica.</p>
+                    </div>
+                </div>
+                <div class="exp-row">
+                    <div class="exp-icon">📟</div>
+                    <div class="exp-info">
+                        <h4>Hardware Hacking</h4>
+                        <p>Interfaceamento físico e análise de sinais RF (Ex: Flipper Zero, Prototipagem).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-group">
+                <a href="https://wa.me/5563981253078" class="btn btn-primary">INICIAR PROTOCOLO DE ORÇAMENTO</a>
+                <a href="https://github.com/samuelllks" class="btn btn-social">GITHUB // samuelllks</a>
+                <a href="https://instagram.com/samuelmendes0" class="btn btn-social">INSTAGRAM // @samuelmendes0</a>
+                <a href="https://discord.com/users/samuelmendes0" class="btn btn-social">DISCORD // samuelmendes0</a>
+            </div>
+        </div>
+
+        <div class="footer-ticker">
+            <div class="ticker-track">
+                <span>SAMUEL MENDES</span><span>|</span><span>FULLSTARK ARCHITECT</span><span>|</span><span>BRAK HUB</span><span>|</span><span>BLENDER MASTER</span><span>|</span><span>SAMUEL MENDES</span><span>|</span><span>FULLSTARK ARCHITECT</span><span>|</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Lógica da Intro de Boot ---
+        const bootLoader = document.getElementById('boot-loader');
+        const bootScreen = document.getElementById('boot-screen');
+        const mainContent = document.getElementById('main-content');
+        const finalStat = document.getElementById('final-stat');
+        let audioEnabled = false;
+
+        // Sons de terminal (frequências de bip)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playBeep(freq, duration) {
+            if (!audioEnabled) return;
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.type = 'square';
+            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime); // Volume bem baixo
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + duration);
+        }
+
+        // Ativar áudio no primeiro clique (política do navegador)
+        function enableAudio() {
+            if (!audioEnabled) {
+                audioEnabled = true;
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+            }
+        }
+
+        // Sequência de linhas do boot (texto, classe, delay antes da próxima)
+        const bootSequence = [
+            { t: "> INIT CORE_ARCHITECT_PROTOCOL v7.1...", c: "hl", d: 500, b: 800 },
+            { t: "> CARREGANDO ASSINATURA DIGITAL: [SAMUEL MENDES]", c: "ok", d: 300 },
+            { t: "> VERIFICANDO HARDWARE_HACKER_TOOLS...", c: "ok", d: 200, b: 400 },
+            { t: "> [+] Flipper Zero Sub-GHz ... OK", c: "ok", d: 100 },
+            { t: "> [+] Proxmark3 RFID ... OK", c: "ok", d: 100 },
+            { t: "> [+] ESP32 Wi-Fi Marauder ... OK", c: "ok", d: 100 },
+            { t: "> [+] USB Rubber Ducky ... OK", c: "ok", d: 200 },
+            { t: "> INICIANDO KALI_LINUX_KERNEL_SUBSYSTEM...", c: "warn", d: 600, b: 300 },
+            { t: "> LOCALIZANDO BANCO DE DADOS CORE_REPUTATION...", c: "ok", d: 400 },
+            { t: "> [!] ERRO DE PERMISSÃO: BANCO DE DADOS TRANCADO.", c: "crit", d: 500, b: 1200 },
+            { t: "> TENTANDO BYPASS DE SEGURANÇA [METHOD: BRUTE_FORCE]...", c: "warn", d: 300 },
+            { t: "  [ 1240 / ??? ] CHAVES ENCONTRADAS...", c: "warn", d: 200, b: 200 },
+            { t: "> STATUS: PROGRESSO 98%...", c: "warn", d: 1000 },
+            { t: "> STATUS: CESSANDO ATAQUE. REPUTAÇÃO CONFIRMADA.", c: "ok", d: 300, b: 900 },
+            { t: "> SINCROINZANDO ARSENAL DE SINTAXES...", c: "ok", d: 100, b: 300 },
+            { t: "> CARREGANDO ATIVOS BRAK_NETWORK...", c: "hl", d: 400 },
+            { t: "> FINALIZANDO SETUP DE AMBIENTE [FULLSTARK]...", c: "ok", d: 200 },
+            { t: "> <span class='scan-bar'></span>", c: "", d: 2100 }, // Barra de scan animada
+            { t: "> TUDO PRONTO. BEM-VINDO AO CORE.", c: "hl", d: 300, b: 1500 }
+        ];
+
+        let sequenceIndex = 0;
+
+        // Função que renderiza as linhas uma a uma
+        function printNextLine() {
+            if (sequenceIndex < bootSequence.length) {
+                const lineData = bootSequence[sequenceIndex];
+                const lineEl = document.createElement('div');
+                lineEl.className = `boot-line ${lineData.c}`;
+                lineEl.innerHTML = lineData.t;
+                
+                // Toca som se definido
+                if (lineData.b) playBeep(lineData.b, lineData.d / 1000 + 0.1);
+                else playBeep(600, 0.01); // Bip padrão curto
+
+                bootLoader.appendChild(lineEl);
+                
+                // Scroll automático para baixo
+                bootScreen.scrollTop = bootScreen.scrollHeight;
+
+                sequenceIndex++;
+                setTimeout(printNextLine, lineData.d);
+            } else {
+                // Fim da sequência, mostra status final e entra
+                finalStat.style.display = "block";
+                setTimeout(finishBoot, 2000);
+            }
+        }
+
+        // Finaliza o boot e mostra o site
+        function finishBoot() {
+            playBeep(1200, 0.1);
+            setTimeout(() => playBeep(1600, 0.2), 100);
+            
+            bootScreen.style.display = "none";
+            mainContent.style.display = "block";
+            // Pequeno delay para a transição de opacidade
+            setTimeout(() => mainContent.style.opacity = "1", 50);
+        }
+
+        // Inicia a sequência ao carregar a página
+        window.addEventListener('load', () => {
+            // Adiciona cursor piscante no final
+            const cursor = document.createElement('span');
+            cursor.id = 'boot-cursor';
+            bootLoader.appendChild(cursor);
+            setTimeout(printNextLine, 1000); // Espera 1s antes de começar
+        });
+
+
+        // --- Lógica de Votação (Likes) ---
+        function registerVote(type) {
+            const msgBox = document.getElementById('voteMsg');
+            if (localStorage.getItem('sm_voted')) {
+                msgBox.innerText = "Avaliação já registrada no sistema.";
+                msgBox.style.color = "var(--red)";
+                return;
+            }
+            let count = document.getElementById(type + 'Count');
+            count.innerText = parseInt(count.innerText) + 1;
+            localStorage.setItem('sm_voted', type);
+            document.getElementById('btnLike').classList.add(type === 'like' ? 'liked' : 'none');
+            document.getElementById('btnDislike').classList.add(type === 'dislike' ? 'disliked' : 'none');
+            msgBox.innerText = "Protocolo registrado.";
+            msgBox.style.color = "var(--cyan)";
+        }
+    </script>
+</body>
+</html>
