@@ -1861,17 +1861,30 @@ contato: 63 8125-3078
 </script>
 </body>
 </html>
-
-
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodapé Ajustado</title>
     <style>
-        /* Faixa de utilidade pública */
-        .faixa-fixa-social {
-            position: fixed;
-            bottom: 0;
-            left: 0;
+        /* Ajuste do Body para não comer o topo */
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh; /* Garante que o corpo tenha no mínimo a altura da tela */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* O conteúdo do seu site respira aqui */
+        .conteudo-principal {
+            flex: 1 0 auto; /* Ocupa o espaço necessário sem encolher o topo */
+        }
+
+        /* CONFIGURAÇÃO DA FAIXA */
+        .faixa-social-rodape {
+            flex-shrink: 0; /* Impede que a faixa diminua de tamanho */
             width: 100%;
             background: #000;
             color: #fff;
@@ -1879,89 +1892,85 @@ contato: 63 8125-3078
             font-family: 'Verdana', sans-serif;
             font-size: 14px;
             font-weight: bold;
-            z-index: 999999;
-            border-top: 4px solid #0055ff; /* Azul no lugar do vermelho/amarelo */
+            border-top: 4px solid #0055ff; 
             overflow: hidden;
             display: flex;
-            pointer-events: none; /* BLOQUEIA qualquer interação de clique ou mouse */
+            align-items: center; /* Alinha verticalmente */
         }
 
-        /* Container do movimento - 120 segundos para ser ultra suave */
         .ticker-move {
             display: flex;
+            align-items: center; /* Alinha ícones e textos no centro da faixa */
             white-space: nowrap;
             will-change: transform; 
-            animation: deslizar-lento 120s linear infinite !important; /* !important garante que não pare */
-            transform: translateZ(0);
+            animation: deslizar-lento 120s linear infinite;
         }
 
-        /* Itens individuais */
         .item-noticia {
             display: flex;
-            align-items: center;
-            padding-right: 120px;
+            align-items: center; 
+            padding-right: 15px; /* Espaço entre texto e diamante */
             text-transform: uppercase;
+            line-height: 1.2;
         }
 
         .item-noticia strong {
-            color: #00d9ff; /* Azul ciano para destacar os números */
+            color: #00d9ff; 
             margin-left: 8px;
         }
 
-        /* Separador Azul */
         .divisor-diamond {
-            color: #0055ff; /* Azul vibrante no lugar do amarelo */
-            margin: 0 40px;
-            font-size: 22px;
+            color: #0055ff; 
+            margin-right: 80px; /* Espaço após o diamante */
+            font-size: 20px;
+            display: inline-flex;
+            align-items: center;
         }
 
-        /* Animação contínua */
         @keyframes deslizar-lento {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-
-        /* Removido o seletor :hover que pausava a faixa */
     </style>
 </head>
 <body>
 
-    <div class="faixa-fixa-social">
-        <div class="ticker-move" id="ticker-target">
-            </div>
+    <div class="conteudo-principal">
+        </div>
+
+    <div class="faixa-social-rodape">
+        <div class="ticker-move" id="ticker-target"></div>
     </div>
 
     <script>
         const listaCompleta = [
             "PARE DE FUMAR: Preserve sua saúde e a de quem você ama. Ligue: <strong>136</strong>",
-            "PRECISA CONVERSAR? O CVV atende 24h por dia. Você não está sozinho/a. Ligue: <strong>188</strong>",
-            "EXPLORAÇÃO SEXUAL É CRIME: Proteja nossas crianças e adolescentes. Denuncie: <strong>DISQUE 100</strong>",
-            "INTERNET SEGURA: Monitore o acesso de menores. Combata a pedofilia e o assédio online!",
-            "MAUS-TRATOS AOS ANIMAIS: Abandonar ou agredir animais é crime federal! Denuncie: <strong>190</strong>",
-            "VIOLÊNCIA DOMÉSTICA: Não se cale. Ajuda para mulheres, homens e idosos. Ligue: <strong>180</strong>",
-            "RACISMO É CRIME: Respeite a todos, todas e todes. Discriminação não será tolerada!",
-            "PROTESTO: Por educação pública, moradia digna e saúde para todo cidadão e cidadã!",
-            "SAÚDE MENTAL: Depressão não é frescura. Procure apoio no CAPS ou unidade de saúde.",
-            "DOAÇÃO DE SANGUE: Um pequeno gesto salva até 4 vidas. Vá ao Hemocentro!",
-            "TRABALHO ESCRAVO: Diga não à exploração humana. Denuncie no <strong>DISQUE 100</strong>",
-            "INCLUSÃO: O mundo deve ser acessível para todas as pessoas (PCD). Respeite as leis!",
-            "GOLPES DIGITAIS: Cuidado com links suspeitos e pedidos de dinheiro por apps.",
-            "LGBTQIA+ FOBIA: O preconceito mata. O respeito é um direito garantido por lei.",
-            "MEIO AMBIENTE: O descarte correto de lixo é um ato de respeito ao planeta.",
-            "BULLYING NAS ESCOLAS: Eduque para a empatia. A violência escolar deixa marcas.",
-            "PROTEÇÃO AO IDOSO: Abandono e violência contra idosos é crime. Denuncie: <strong>DISQUE 100</strong>"
+            "PRECISA CONVERSAR? O CVV atende 24h por dia. Ligue: <strong>188</strong>",
+            "EXPLORAÇÃO SEXUAL É CRIME: Proteja nossas crianças. Denuncie: <strong>DISQUE 100</strong>",
+            "INTERNET SEGURA: Monitore o acesso de menores. Combata o assédio!",
+            "MAUS-TRATOS AOS ANIMAIS: Agredir animais é crime! Denuncie: <strong>190</strong>",
+            "VIOLÊNCIA DOMÉSTICA: Não se cale. Ajuda para mulheres e idosos. Ligue: <strong>180</strong>",
+            "RACISMO É CRIME: Respeite a todos. Discriminação não será tolerada!",
+            "SAÚDE MENTAL: Depressão não é frescura. Procure apoio no CAPS.",
+            "DOAÇÃO DE SANGUE: Um gesto salva até 4 vidas. Vá ao Hemocentro!",
+            "TRABALHO ESCRAVO: Diga não à exploração. Denuncie no <strong>DISQUE 100</strong>",
+            "INCLUSÃO: O mundo deve ser acessível para todos (PCD). Respeite!",
+            "GOLPES DIGITAIS: Cuidado com links suspeitos e pedidos de PIX.",
+            "LGBTQIA+ FOBIA: O preconceito mata. Respeito é lei.",
+            "MEIO AMBIENTE: O descarte correto de lixo salva o planeta.",
+            "BULLYING NAS ESCOLAS: Eduque para a empatia. Diga não à violência.",
+            "PROTEÇÃO AO IDOSO: Abandono é crime. Denuncie: <strong>DISQUE 100</strong>"
         ];
 
         function iniciarFaixa() {
             const container = document.getElementById('ticker-target');
-            const embaralhado = listaCompleta.sort(() => Math.random() - 0.5);
+            if(!container) return;
+            const embaralhado = [...listaCompleta].sort(() => Math.random() - 0.5);
             const conteudo = embaralhado.map(txt => 
                 `<div class="item-noticia">${txt}</div><span class="divisor-diamond">❖</span>`
             ).join('');
-            
             container.innerHTML = conteudo + conteudo;
         }
-
         window.onload = iniciarFaixa;
     </script>
 
