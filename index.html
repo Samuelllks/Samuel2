@@ -1861,3 +1861,109 @@ contato: 63 8125-3078
 </script>
 </body>
 </html>
+
+
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* Faixa de utilidade pública */
+        .faixa-fixa-social {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #000;
+            color: #fff;
+            padding: 15px 0;
+            font-family: 'Verdana', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 999999;
+            border-top: 4px solid #0055ff; /* Azul no lugar do vermelho/amarelo */
+            overflow: hidden;
+            display: flex;
+            pointer-events: none; /* BLOQUEIA qualquer interação de clique ou mouse */
+        }
+
+        /* Container do movimento - 120 segundos para ser ultra suave */
+        .ticker-move {
+            display: flex;
+            white-space: nowrap;
+            will-change: transform; 
+            animation: deslizar-lento 120s linear infinite !important; /* !important garante que não pare */
+            transform: translateZ(0);
+        }
+
+        /* Itens individuais */
+        .item-noticia {
+            display: flex;
+            align-items: center;
+            padding-right: 120px;
+            text-transform: uppercase;
+        }
+
+        .item-noticia strong {
+            color: #00d9ff; /* Azul ciano para destacar os números */
+            margin-left: 8px;
+        }
+
+        /* Separador Azul */
+        .divisor-diamond {
+            color: #0055ff; /* Azul vibrante no lugar do amarelo */
+            margin: 0 40px;
+            font-size: 22px;
+        }
+
+        /* Animação contínua */
+        @keyframes deslizar-lento {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Removido o seletor :hover que pausava a faixa */
+    </style>
+</head>
+<body>
+
+    <div class="faixa-fixa-social">
+        <div class="ticker-move" id="ticker-target">
+            </div>
+    </div>
+
+    <script>
+        const listaCompleta = [
+            "PARE DE FUMAR: Preserve sua saúde e a de quem você ama. Ligue: <strong>136</strong>",
+            "PRECISA CONVERSAR? O CVV atende 24h por dia. Você não está sozinho/a. Ligue: <strong>188</strong>",
+            "EXPLORAÇÃO SEXUAL É CRIME: Proteja nossas crianças e adolescentes. Denuncie: <strong>DISQUE 100</strong>",
+            "INTERNET SEGURA: Monitore o acesso de menores. Combata a pedofilia e o assédio online!",
+            "MAUS-TRATOS AOS ANIMAIS: Abandonar ou agredir animais é crime federal! Denuncie: <strong>190</strong>",
+            "VIOLÊNCIA DOMÉSTICA: Não se cale. Ajuda para mulheres, homens e idosos. Ligue: <strong>180</strong>",
+            "RACISMO É CRIME: Respeite a todos, todas e todes. Discriminação não será tolerada!",
+            "PROTESTO: Por educação pública, moradia digna e saúde para todo cidadão e cidadã!",
+            "SAÚDE MENTAL: Depressão não é frescura. Procure apoio no CAPS ou unidade de saúde.",
+            "DOAÇÃO DE SANGUE: Um pequeno gesto salva até 4 vidas. Vá ao Hemocentro!",
+            "TRABALHO ESCRAVO: Diga não à exploração humana. Denuncie no <strong>DISQUE 100</strong>",
+            "INCLUSÃO: O mundo deve ser acessível para todas as pessoas (PCD). Respeite as leis!",
+            "GOLPES DIGITAIS: Cuidado com links suspeitos e pedidos de dinheiro por apps.",
+            "LGBTQIA+ FOBIA: O preconceito mata. O respeito é um direito garantido por lei.",
+            "MEIO AMBIENTE: O descarte correto de lixo é um ato de respeito ao planeta.",
+            "BULLYING NAS ESCOLAS: Eduque para a empatia. A violência escolar deixa marcas.",
+            "PROTEÇÃO AO IDOSO: Abandono e violência contra idosos é crime. Denuncie: <strong>DISQUE 100</strong>"
+        ];
+
+        function iniciarFaixa() {
+            const container = document.getElementById('ticker-target');
+            const embaralhado = listaCompleta.sort(() => Math.random() - 0.5);
+            const conteudo = embaralhado.map(txt => 
+                `<div class="item-noticia">${txt}</div><span class="divisor-diamond">❖</span>`
+            ).join('');
+            
+            container.innerHTML = conteudo + conteudo;
+        }
+
+        window.onload = iniciarFaixa;
+    </script>
+
+</body>
+</html>
