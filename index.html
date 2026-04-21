@@ -6,9 +6,6 @@
 <title>Samuel Mendes // FullStark — System Architect</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   ROOT & VARIABLES
-   ============================================================ */
 :root {
   --black:    #010305;
   --deep:     #040b12;
@@ -32,9 +29,6 @@
   --font-body: 'Rajdhani', sans-serif;
 }
 
-/* ============================================================
-   RESET & BASE
-   ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
 body {
@@ -46,17 +40,15 @@ body {
   cursor: none;
 }
 
-/* ============================================================
-   CUSTOM CURSOR
-   ============================================================ */
+/* CURSOR — apenas o essencial */
 #cursor {
   position: fixed; width: 10px; height: 10px;
   background: var(--accent); border-radius: 50%;
   pointer-events: none; z-index: 99999;
   transform: translate(-50%,-50%);
-  transition: transform 0.08s, background 0.2s, width 0.2s, height 0.2s;
+  transition: transform 0.08s, background 0.2s;
   mix-blend-mode: screen;
-  box-shadow: 0 0 14px var(--accent), 0 0 28px var(--accent);
+  box-shadow: 0 0 14px var(--accent);
 }
 #cursor-ring {
   position: fixed; width: 38px; height: 38px;
@@ -65,51 +57,21 @@ body {
   transform: translate(-50%,-50%);
   transition: all 0.16s cubic-bezier(0.25,1,0.5,1);
 }
-#cursor-dot {
-  position: fixed; width: 4px; height: 4px;
-  background: var(--accent2); border-radius: 50%;
-  pointer-events: none; z-index: 100000;
-  transform: translate(-50%,-50%);
-}
-body:has(a:hover) #cursor,
-body:has(button:hover) #cursor { transform: translate(-50%,-50%) scale(2.5); background: var(--accent2); }
-body:has(a:hover) #cursor-ring,
-body:has(button:hover) #cursor-ring { width: 60px; height: 60px; opacity: 0.9; border-color: var(--accent2); }
 
-/* ============================================================
-   CANVAS BG
-   ============================================================ */
+/* CANVAS BG */
 #bg-canvas {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   z-index: 0; opacity: 0.22; pointer-events: none;
 }
 
-/* ============================================================
-   SCANLINES
-   ============================================================ */
+/* SCANLINES */
 .scanlines {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: repeating-linear-gradient(
-    0deg, transparent, transparent 2px,
-    rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px
-  );
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
   pointer-events: none; z-index: 1; opacity: 0.6;
 }
 
-/* ============================================================
-   NOISE TEXTURE OVERLAY
-   ============================================================ */
-.noise {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  pointer-events: none; z-index: 2; opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 200px 200px;
-}
-
-/* ============================================================
-   NAV
-   ============================================================ */
+/* NAV */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   padding: 1.1rem 3rem;
@@ -125,14 +87,11 @@ nav {
   text-decoration: none;
   display: flex; align-items: center; gap: 0.5rem;
 }
-.nav-logo-wrap {
-  display: flex; flex-direction: column; gap: 0.18rem;
-}
+.nav-logo-wrap { display: flex; flex-direction: column; gap: 0.18rem; }
 .nav-logo-disponivel {
   font-family: var(--font-mono); font-size: 0.52rem;
   color: var(--accent); letter-spacing: 0.18em;
-  display: flex; align-items: center; gap: 0.4rem;
-  opacity: 0.8;
+  display: flex; align-items: center; gap: 0.4rem; opacity: 0.8;
 }
 .nav-logo-disponivel::before {
   content: ''; width: 5px; height: 5px; border-radius: 50%;
@@ -141,10 +100,8 @@ nav {
 .nav-logo-bracket { color: var(--accent2); }
 .nav-links { display: flex; gap: 2.5rem; list-style: none; }
 .nav-links a {
-  font-family: var(--font-mono);
-  font-size: 0.68rem; color: var(--muted);
-  text-decoration: none; letter-spacing: 0.12em;
-  text-transform: uppercase; transition: color 0.2s;
+  font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted);
+  text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s;
   position: relative;
 }
 .nav-links a::after {
@@ -153,33 +110,21 @@ nav {
 }
 .nav-links a:hover { color: var(--accent); }
 .nav-links a:hover::after { width: 100%; }
-.nav-status {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted);
-  letter-spacing: 0.1em;
-}
-.nav-status-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--accent); animation: pulse 2s infinite;
-}
+
 @keyframes pulse { 0%,100%{ box-shadow: 0 0 0 0 rgba(0,255,231,0.6); } 50%{ box-shadow: 0 0 0 6px rgba(0,255,231,0); } }
 
-/* ============================================================
-   HERO
-   ============================================================ */
+/* HERO */
 #hero {
   position: relative; z-index: 3;
   min-height: 100vh;
   display: flex; align-items: center;
-  padding: 7rem 3rem 5rem;
-  overflow: hidden;
+  padding: 7rem 3rem 5rem; overflow: hidden;
 }
 .hero-grid {
   display: grid; grid-template-columns: 1.1fr 0.9fr;
   gap: 5rem; align-items: center;
   max-width: 1280px; margin: 0 auto; width: 100%;
 }
-.hero-left { position: relative; }
 .hero-eyebrow {
   display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;
   opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
@@ -205,40 +150,23 @@ nav {
 }
 .glitch-text::before {
   color: var(--accent2); animation: glitch1 5s infinite;
-  clip-path: polygon(0 0, 100% 0, 100% 38%, 0 38%);
-  left: -2px;
+  clip-path: polygon(0 0, 100% 0, 100% 38%, 0 38%); left: -2px;
 }
 .glitch-text::after {
   color: var(--accent3); animation: glitch2 5s infinite;
-  clip-path: polygon(0 62%, 100% 62%, 100% 100%, 0 100%);
-  left: 2px;
+  clip-path: polygon(0 62%, 100% 62%, 100% 100%, 0 100%); left: 2px;
 }
-@keyframes glitch1 {
-  0%,90%,100%{ transform: translate(0); opacity: 0; }
-  92%{ transform: translate(-3px, 1px); opacity: 1; }
-  94%{ transform: translate(3px, -1px); opacity: 1; }
-  96%{ transform: translate(-2px, 2px); opacity: 1; }
-  98%{ transform: translate(0); opacity: 0; }
-}
-@keyframes glitch2 {
-  0%,88%,100%{ transform: translate(0); opacity: 0; }
-  90%{ transform: translate(3px, -2px); opacity: 1; }
-  93%{ transform: translate(-3px, 1px); opacity: 1; }
-  97%{ transform: translate(2px, 2px); opacity: 1; }
-  99%{ transform: translate(0); opacity: 0; }
-}
+@keyframes glitch1 { 0%,90%,100%{ transform: translate(0); opacity: 0; } 92%{ transform: translate(-3px,1px); opacity: 1; } 94%{ transform: translate(3px,-1px); opacity: 1; } 96%{ transform: translate(-2px,2px); opacity: 1; } 98%{ transform: translate(0); opacity: 0; } }
+@keyframes glitch2 { 0%,88%,100%{ transform: translate(0); opacity: 0; } 90%{ transform: translate(3px,-2px); opacity: 1; } 93%{ transform: translate(-3px,1px); opacity: 1; } 97%{ transform: translate(2px,2px); opacity: 1; } 99%{ transform: translate(0); opacity: 0; } }
+
 .hero-subtitle {
   font-family: var(--font-display); font-size: 1.1rem;
-  color: var(--accent2); letter-spacing: 0.12em;
-  text-transform: uppercase;
-  opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
-  margin-bottom: 1.75rem;
+  color: var(--accent2); letter-spacing: 0.12em; text-transform: uppercase;
+  opacity: 0; animation: fadeUp 0.7s 0.6s forwards; margin-bottom: 1.75rem;
 }
 .hero-desc {
-  font-size: 1.08rem; color: var(--text);
-  line-height: 1.85; max-width: 540px;
-  opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
-  margin-bottom: 2.5rem;
+  font-size: 1.08rem; color: var(--text); line-height: 1.85; max-width: 540px;
+  opacity: 0; animation: fadeUp 0.7s 0.8s forwards; margin-bottom: 2.5rem;
 }
 .hero-actions {
   display: flex; flex-wrap: wrap; gap: 1rem;
@@ -250,31 +178,20 @@ nav {
 }
 .hero-badge {
   font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em;
-  padding: 0.3rem 0.7rem;
-  border: 1px solid var(--border2); color: var(--muted);
+  padding: 0.3rem 0.7rem; border: 1px solid var(--border2); color: var(--muted);
   text-transform: uppercase; transition: all 0.2s;
 }
 .hero-badge:hover { border-color: var(--accent); color: var(--accent); }
 
-/* Buttons */
 .btn {
-  font-family: var(--font-mono);
-  font-size: 0.75rem; letter-spacing: 0.14em;
+  font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em;
   text-transform: uppercase; text-decoration: none;
   padding: 0.9rem 2rem;
   display: inline-flex; align-items: center; gap: 0.5rem;
-  transition: all 0.25s; cursor: none; position: relative; overflow: hidden;
-  white-space: nowrap;
+  transition: all 0.25s; cursor: none; position: relative; overflow: hidden; white-space: nowrap;
 }
-.btn::before {
-  content: ''; position: absolute; inset: 0;
-  background: currentColor; opacity: 0;
-  transition: opacity 0.2s;
-}
-.btn:hover::before { opacity: 0.06; }
 .btn-primary {
-  background: var(--accent); color: var(--black);
-  border: 1px solid var(--accent); font-weight: 700;
+  background: var(--accent); color: var(--black); border: 1px solid var(--accent); font-weight: 700;
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
 }
 .btn-primary:hover { background: transparent; color: var(--accent); box-shadow: 0 0 30px var(--glow); }
@@ -283,69 +200,42 @@ nav {
   clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0);
 }
 .btn-ghost:hover { border-color: var(--accent); box-shadow: 0 0 30px var(--glow); }
-.btn-danger {
-  background: transparent; color: var(--accent2); border: 1px solid rgba(255,60,110,0.4);
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-}
-.btn-danger:hover { border-color: var(--accent2); box-shadow: 0 0 30px var(--glow2); }
 
-/* HERO RIGHT */
 .hero-right {
   display: flex; flex-direction: column; gap: 1.5rem;
   opacity: 0; animation: fadeUp 0.7s 0.7s forwards;
 }
 .rep-card {
-  background: var(--panel); border: 1px solid var(--border);
-  padding: 2.5rem; position: relative;
+  background: var(--panel); border: 1px solid var(--border); padding: 2.5rem; position: relative;
   clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 .rep-card:hover { border-color: rgba(0,255,231,0.3); box-shadow: 0 0 40px rgba(0,255,231,0.06); }
-.rep-card::before {
-  content: ''; position: absolute; top:-1px; right: 20px; width: 32px; height: 1px; background: var(--accent);
-}
-.rep-card::after {
-  content: ''; position: absolute; bottom:-1px; left: 20px; width: 32px; height: 1px; background: var(--accent3);
-}
+.rep-card::before { content: ''; position: absolute; top:-1px; right: 20px; width: 32px; height: 1px; background: var(--accent); }
+.rep-card::after { content: ''; position: absolute; bottom:-1px; left: 20px; width: 32px; height: 1px; background: var(--accent3); }
 .rep-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
-.rep-label {
-  font-family: var(--font-mono); font-size: 0.62rem;
-  letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase;
-}
+.rep-label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase; }
 .rep-live-badge {
   font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.15em;
   background: rgba(0,255,231,0.1); color: var(--accent);
   border: 1px solid rgba(0,255,231,0.25); padding: 0.2rem 0.5rem;
   display: flex; align-items: center; gap: 0.35rem;
 }
-.rep-live-badge::before {
-  content:''; width:5px; height:5px; background:var(--accent); border-radius:50%;
-  animation: pulse 1.5s infinite;
-}
+.rep-live-badge::before { content:''; width:5px; height:5px; background:var(--accent); border-radius:50%; animation: pulse 1.5s infinite; }
 .rep-value {
   font-family: var(--font-display); font-size: 3.8rem; font-weight: 900;
-  color: var(--accent); text-shadow: 0 0 50px rgba(0,255,231,0.35); line-height: 1;
-  margin-bottom: 0.4rem;
+  color: var(--accent); text-shadow: 0 0 50px rgba(0,255,231,0.35); line-height: 1; margin-bottom: 0.4rem;
 }
 .rep-sub { font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent2); letter-spacing: 0.18em; }
 .rep-bar-wrap { margin-top: 1.25rem; }
-.rep-bar-label {
-  display: flex; justify-content: space-between;
-  font-family: var(--font-mono); font-size: 0.58rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.5rem;
-}
+.rep-bar-label { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.58rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
 .rep-bar-track { width: 100%; height: 3px; background: var(--border); overflow: hidden; }
-.rep-bar-fill {
-  height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent3));
-  width: 0%; transition: width 2.2s cubic-bezier(0.25,1,0.5,1);
-  box-shadow: 0 0 10px var(--accent);
-}
+.rep-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent3)); width: 0%; transition: width 2.2s cubic-bezier(0.25,1,0.5,1); box-shadow: 0 0 10px var(--accent); }
 
 .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 .status-item {
-  background: var(--deep); border: 1px solid var(--border);
-  padding: 1rem 1.1rem;
-  display: flex; flex-direction: column; gap: 0.3rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--deep); border: 1px solid var(--border); padding: 1rem 1.1rem;
+  display: flex; flex-direction: column; gap: 0.3rem; transition: border-color 0.2s, box-shadow 0.2s;
 }
 .status-item:hover { border-color: var(--accent); box-shadow: 0 0 16px var(--glow); }
 .status-key { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
@@ -354,50 +244,29 @@ nav {
 .status-val.hot { color: var(--accent2); }
 .status-val.purple { color: var(--accent3); }
 
-/* Hero scroll indicator */
 .scroll-indicator {
   position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-  opacity: 0; animation: fadeUp 0.7s 1.5s forwards;
-  z-index: 4;
+  opacity: 0; animation: fadeUp 0.7s 1.5s forwards; z-index: 4;
 }
 .scroll-indicator-text { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
 .scroll-indicator-arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollPulse 2s infinite; }
 @keyframes scrollPulse { 0%,100%{ opacity: 0.3; } 50%{ opacity: 1; } }
 
-/* ============================================================
-   LAYOUT UTILS
-   ============================================================ */
+/* LAYOUT */
 section { position: relative; z-index: 3; padding: 7rem 3rem; }
 .container { max-width: 1280px; margin: 0 auto; }
 .section-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 4rem; }
 .section-num { font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent2); letter-spacing: 0.18em; flex-shrink: 0; }
 .section-title { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--bright); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
 .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border2), transparent); min-width: 40px; }
-.section-sub {
-  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em;
-  color: var(--muted); text-transform: uppercase; margin-top: -3rem; margin-bottom: 3.5rem;
-}
+.section-sub { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; margin-top: -3rem; margin-bottom: 3.5rem; }
 
-/* ============================================================
-   SCROLL REVEAL
-   ============================================================ */
-.scroll-reveal {
-  opacity: 0; transform: translateY(28px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
+.scroll-reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ============================================================
-   MANIFESTO
-   ============================================================ */
+/* MANIFESTO */
 #manifesto { background: var(--deep); }
-.manifesto-wrap { 
-  display: grid; 
-  grid-template-columns: 1fr; 
-  gap: 5rem; 
-  align-items: start; 
-}
 .manifesto-text {
   font-size: 1.15rem; line-height: 2.1; color: var(--text);
   border-left: 2px solid var(--accent); padding-left: 2rem;
@@ -405,47 +274,31 @@ section { position: relative; z-index: 3; padding: 7rem 3rem; }
 .manifesto-text strong { color: var(--accent); font-weight: 700; }
 .manifesto-text em { color: var(--accent2); font-style: normal; font-weight: 600; }
 
-/* ============================================================
-   SKILLS
-   ============================================================ */
+/* SKILLS */
 #skills { background: var(--black); }
 .skills-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 3rem; overflow-x: auto; }
 .tab-btn {
   font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em;
   color: var(--muted); text-transform: uppercase; background: none; border: none;
   cursor: none; padding: 0.85rem 1.75rem;
-  border-bottom: 2px solid transparent; transition: all 0.2s; margin-bottom: -1px;
-  white-space: nowrap; flex-shrink: 0;
+  border-bottom: 2px solid transparent; transition: all 0.2s; margin-bottom: -1px; white-space: nowrap; flex-shrink: 0;
 }
 .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 .tab-btn:hover { color: var(--bright); }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-.skills-icon-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 1.25rem;
-}
+.skills-icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 1.25rem; }
 .skill-icon-item {
   display: flex; flex-direction: column; align-items: center; gap: 0.65rem;
-  padding: 1.2rem 0.5rem;
-  background: var(--panel); border: 1px solid var(--border);
+  padding: 1.2rem 0.5rem; background: var(--panel); border: 1px solid var(--border);
   transition: all 0.25s; cursor: none;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
 }
-.skill-icon-item:hover {
-  border-color: var(--accent); box-shadow: 0 0 18px var(--glow); transform: translateY(-4px);
-}
-.skill-icon-item img {
-  width: 34px; height: 34px; object-fit: contain;
-  filter: drop-shadow(0 0 5px rgba(0,255,231,0.4));
-  transition: filter 0.2s;
-}
+.skill-icon-item:hover { border-color: var(--accent); box-shadow: 0 0 18px var(--glow); transform: translateY(-4px); }
+.skill-icon-item img { width: 34px; height: 34px; object-fit: contain; filter: drop-shadow(0 0 5px rgba(0,255,231,0.4)); transition: filter 0.2s; }
 .skill-icon-item:hover img { filter: drop-shadow(0 0 10px rgba(0,255,231,0.7)); }
-.skill-icon-item span {
-  font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.12em;
-  color: var(--text); text-transform: uppercase; text-align: center;
-}
+.skill-icon-item span { font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.12em; color: var(--text); text-transform: uppercase; text-align: center; }
 
-/* Skill level bar (for tab-skills with bars) */
 .skill-bar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 3rem; }
 .skill-bar-item { display: flex; flex-direction: column; gap: 0.4rem; }
 .skill-bar-header { display: flex; justify-content: space-between; align-items: center; }
@@ -457,43 +310,32 @@ section { position: relative; z-index: 3; padding: 7rem 3rem; }
 .skill-bar-fill.c2 { background: linear-gradient(90deg, var(--accent2), var(--accent4)); box-shadow: 0 0 8px var(--accent2); }
 .skill-bar-fill.c3 { background: linear-gradient(90deg, var(--accent3), var(--accent)); box-shadow: 0 0 8px var(--accent3); }
 
-/* ============================================================
-   PROJECTS
-   ============================================================ */
+/* PROJECTS */
 #projects { background: var(--deep); }
 .projects-list { display: flex; flex-direction: column; gap: 2px; }
 
-/* Featured (big) project card */
 .project-featured {
-  background: var(--panel); border: 1px solid var(--border);
-  padding: 3rem; position: relative; overflow: hidden;
+  background: var(--panel); border: 1px solid var(--border); padding: 3rem; position: relative; overflow: hidden;
   transition: all 0.35s; cursor: none;
-  display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: center;
-  margin-bottom: 1.5rem;
+  display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: center; margin-bottom: 1.5rem;
 }
 .project-featured::before {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, var(--glow) 0%, transparent 50%);
-  opacity: 0; transition: opacity 0.35s;
+  background: linear-gradient(135deg, var(--glow) 0%, transparent 50%); opacity: 0; transition: opacity 0.35s;
 }
 .project-featured:hover { border-color: rgba(0,255,231,0.4); transform: translateX(4px); }
 .project-featured:hover::before { opacity: 1; }
 .project-featured-left { position: relative; z-index: 1; }
-.project-featured-right {
-  position: relative; z-index: 1; display: flex; flex-direction: column; gap: 1.25rem;
-}
+.project-featured-right { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 1.25rem; }
 
-/* Standard project card */
 .project-card {
-  background: var(--panel); border: 1px solid var(--border);
-  padding: 2rem 2.5rem; position: relative; overflow: hidden;
-  transition: all 0.3s; cursor: none;
+  background: var(--panel); border: 1px solid var(--border); padding: 2rem 2.5rem;
+  position: relative; overflow: hidden; transition: all 0.3s; cursor: none;
   display: grid; grid-template-columns: 180px 1fr auto; gap: 2.5rem; align-items: center;
 }
 .project-card::before {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(90deg, var(--glow), transparent 40%);
-  opacity: 0; transition: opacity 0.3s;
+  background: linear-gradient(90deg, var(--glow), transparent 40%); opacity: 0; transition: opacity 0.3s;
 }
 .project-card:hover { border-color: rgba(0,255,231,0.3); transform: translateX(4px); }
 .project-card:hover::before { opacity: 1; }
@@ -501,106 +343,67 @@ section { position: relative; z-index: 3; padding: 7rem 3rem; }
 .project-card.red:hover { border-color: rgba(255,60,110,0.3); }
 .project-card.purple::before { background: linear-gradient(90deg, var(--glow3), transparent 40%); }
 .project-card.purple:hover { border-color: rgba(123,97,255,0.3); }
+.project-card.gold::before { background: linear-gradient(90deg, rgba(255,215,0,0.12), transparent 40%); }
+.project-card.gold:hover { border-color: rgba(255,215,0,0.35); }
 
 .project-id-col { position: relative; z-index: 1; }
-.project-id {
-  font-family: var(--font-display); font-size: 0.65rem; font-weight: 700;
-  color: var(--muted); letter-spacing: 0.18em; margin-bottom: 0.4rem;
-}
+.project-id { font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; color: var(--muted); letter-spacing: 0.18em; margin-bottom: 0.4rem; }
 .project-badge {
   display: inline-block; font-family: var(--font-mono); font-size: 0.58rem;
   padding: 0.2rem 0.6rem; letter-spacing: 0.1em;
-  background: rgba(0,255,231,0.08); color: var(--accent);
-  border: 1px solid rgba(0,255,231,0.2);
+  background: rgba(0,255,231,0.08); color: var(--accent); border: 1px solid rgba(0,255,231,0.2);
 }
 .project-badge.red { background: rgba(255,60,110,0.08); color: var(--accent2); border-color: rgba(255,60,110,0.2); }
 .project-badge.purple { background: rgba(123,97,255,0.08); color: var(--accent3); border-color: rgba(123,97,255,0.2); }
 .project-badge.gold { background: rgba(255,215,0,0.08); color: var(--accent4); border-color: rgba(255,215,0,0.2); }
 
 .project-main-col { position: relative; z-index: 1; }
-.project-name {
-  font-family: var(--font-display); font-size: 1.15rem; font-weight: 900;
-  color: var(--white); letter-spacing: 0.04em; margin-bottom: 0.75rem;
-  text-transform: uppercase;
-}
+.project-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 900; color: var(--white); letter-spacing: 0.04em; margin-bottom: 0.75rem; text-transform: uppercase; }
 .project-desc { font-size: 0.95rem; color: var(--text); line-height: 1.75; }
 .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-.project-tag {
-  font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.12em;
-  padding: 0.18rem 0.5rem; border: 1px solid var(--border2); color: var(--muted); text-transform: uppercase;
-}
+.project-tag { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.12em; padding: 0.18rem 0.5rem; border: 1px solid var(--border2); color: var(--muted); text-transform: uppercase; }
 
 .project-action-col { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem; flex-shrink: 0; }
-.project-stat-chip {
-  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em;
-  color: var(--accent); display: flex; align-items: center; gap: 0.4rem;
-}
+.project-stat-chip { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--accent); display: flex; align-items: center; gap: 0.4rem; }
 .project-stat-chip::before { content: '▶'; font-size: 0.45rem; }
 .project-stat-chip.red { color: var(--accent2); }
 .project-stat-chip.purple { color: var(--accent3); }
 .project-stat-chip.gold { color: var(--accent4); }
 
-/* Featured project specifics */
 .project-featured .project-name { font-size: 1.8rem; margin-bottom: 1rem; }
 .project-featured .project-desc { font-size: 1rem; line-height: 1.8; }
-.project-featured-num {
-  font-family: var(--font-display); font-size: 0.62rem; color: var(--muted); letter-spacing: 0.2em; margin-bottom: 1rem;
-}
+.project-featured-num { font-family: var(--font-display); font-size: 0.62rem; color: var(--muted); letter-spacing: 0.2em; margin-bottom: 1rem; }
 .project-featured-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-.project-metric {
-  background: var(--deep); border: 1px solid var(--border); padding: 1.1rem;
-  text-align: center;
-}
+.project-metric { background: var(--deep); border: 1px solid var(--border); padding: 1.1rem; text-align: center; }
 .project-metric-val { font-family: var(--font-display); font-size: 1.4rem; font-weight: 900; color: var(--accent); }
 .project-metric-val.red { color: var(--accent2); }
 .project-metric-val.purple { color: var(--accent3); }
+.project-metric-val.gold { color: var(--accent4); }
 .project-metric-label { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.15em; color: var(--muted); margin-top: 0.3rem; text-transform: uppercase; }
 
-/* ============================================================
-   EXPERIENCE
-   ============================================================ */
+/* EXPERIENCE */
 #experience { background: var(--black); }
 .exp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .exp-card {
-  background: var(--panel); border: 1px solid var(--border);
-  padding: 2.25rem 2rem; transition: all 0.3s;
-  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
-  position: relative;
+  background: var(--panel); border: 1px solid var(--border); padding: 2.25rem 2rem; transition: all 0.3s;
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%); position: relative;
 }
-.exp-card::before {
-  content: ''; position: absolute; top: -1px; right: 14px; width: 24px; height: 1px;
-}
+.exp-card::before { content: ''; position: absolute; top: -1px; right: 14px; width: 24px; height: 1px; }
 .exp-card:nth-child(1)::before { background: var(--accent); }
 .exp-card:nth-child(2)::before { background: var(--accent2); }
 .exp-card:nth-child(3)::before { background: var(--accent3); }
-.exp-card:nth-child(4)::before { background: var(--accent4); }
-.exp-card:nth-child(5)::before { background: var(--accent); }
-.exp-card:nth-child(6)::before { background: var(--accent2); }
 .exp-card:hover { border-color: var(--accent3); box-shadow: 0 4px 30px var(--glow3); transform: translateY(-4px); }
-.exp-icon-wrap {
-  width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
-  background: var(--deep); border: 1px solid var(--border); margin-bottom: 1.25rem;
-  font-size: 1.5rem;
-}
+.exp-icon-wrap { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: var(--deep); border: 1px solid var(--border); margin-bottom: 1.25rem; font-size: 1.5rem; }
 .exp-name { font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; color: var(--bright); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
 .exp-desc { font-size: 0.9rem; color: var(--text); line-height: 1.65; margin-bottom: 1rem; }
 .exp-tag { font-family: var(--font-mono); font-size: 0.58rem; color: var(--accent3); letter-spacing: 0.2em; text-transform: uppercase; }
 .exp-skills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
-.exp-skill {
-  font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.12em;
-  padding: 0.15rem 0.45rem; background: rgba(0,255,231,0.05); color: var(--accent);
-  border: 1px solid rgba(0,255,231,0.15);
-}
+.exp-skill { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.12em; padding: 0.15rem 0.45rem; background: rgba(0,255,231,0.05); color: var(--accent); border: 1px solid rgba(0,255,231,0.15); }
 
-/* ============================================================
-   CONTACT
-   ============================================================ */
+/* CONTACT */
 #contact { background: var(--black); }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-.cta-big {
-  font-family: var(--font-display); font-size: clamp(2.2rem, 4.5vw, 3.8rem);
-  font-weight: 900; color: var(--bright); line-height: 1.05; margin-bottom: 1.5rem;
-}
+.cta-big { font-family: var(--font-display); font-size: clamp(2.2rem, 4.5vw, 3.8rem); font-weight: 900; color: var(--bright); line-height: 1.05; margin-bottom: 1.5rem; }
 .cta-big span { color: var(--accent); }
 .cta-big em { color: var(--accent2); font-style: normal; }
 .contact-intro { font-size: 1rem; color: var(--text); line-height: 1.75; margin-bottom: 2.25rem; }
@@ -614,74 +417,55 @@ section { position: relative; z-index: 3; padding: 7rem 3rem; }
 .contact-link:hover { border-color: var(--accent); box-shadow: 0 0 20px var(--glow); transform: translateX(4px); }
 .contact-link.red:hover { border-color: var(--accent2); box-shadow: 0 0 20px var(--glow2); }
 .contact-link.purple:hover { border-color: var(--accent3); box-shadow: 0 0 20px var(--glow3); }
-.contact-link-icon {
-  font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; width: 90px; flex-shrink: 0;
-}
+.contact-link-icon { font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; width: 90px; flex-shrink: 0; }
 .contact-link-val { font-family: var(--font-mono); font-size: 0.82rem; color: var(--bright); flex: 1; }
 .contact-link-arrow { color: var(--accent); font-size: 0.9rem; transition: transform 0.2s; }
 .contact-link:hover .contact-link-arrow { transform: translateX(4px); }
 
-/* Terminal */
-.terminal-box {
-  background: var(--deep); border: 1px solid var(--border); font-family: var(--font-mono); font-size: 0.8rem;
-  overflow: hidden;
-}
-.terminal-header {
-  display: flex; align-items: center; gap: 0.5rem;
-  padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border);
-  background: rgba(0,0,0,0.3);
-}
+.terminal-box { background: var(--deep); border: 1px solid var(--border); font-family: var(--font-mono); font-size: 0.8rem; overflow: hidden; }
+.terminal-header { display: flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.3); }
 .term-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .td1 { background: var(--accent2); } .td2 { background: var(--accent4); } .td3 { background: var(--accent); }
 .term-title { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.2em; margin-left: auto; }
-.terminal-body { padding: 1.5rem 1.5rem; line-height: 2; }
+.terminal-body { padding: 1.5rem; line-height: 2; }
 .term-line { display: flex; gap: 0.5rem; align-items: flex-start; }
 .term-prompt { color: var(--accent); flex-shrink: 0; }
 .term-cmd { color: var(--bright); }
 .term-out { color: var(--text); padding-left: 1.2rem; }
 .term-highlight { color: var(--accent2); }
 .term-hl-green { color: var(--accent); }
-.term-cursor {
-  display: inline-block; width: 8px; height: 1em; background: var(--accent);
-  vertical-align: text-bottom; animation: blink 1s step-end infinite;
-}
+.term-cursor { display: inline-block; width: 8px; height: 1em; background: var(--accent); vertical-align: text-bottom; animation: blink 1s step-end infinite; }
 @keyframes blink { 0%,100%{ opacity: 1; } 50%{ opacity: 0; } }
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
+/* FOOTER */
 footer {
-  position: relative; z-index: 3;
-  background: var(--deep); border-top: 1px solid var(--border);
-  padding: 2.5rem 3rem;
-  display: flex; align-items: center; justify-content: space-between;
-  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted);
-  text-transform: uppercase;
+  position: relative; z-index: 3; background: var(--deep); border-top: 1px solid var(--border);
+  padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase;
 }
-.footer-logo {
-  font-family: var(--font-display); font-size: 0.75rem; font-weight: 900;
-  color: var(--bright); letter-spacing: 0.14em;
-}
+.footer-logo { font-family: var(--font-display); font-size: 0.75rem; font-weight: 900; color: var(--bright); letter-spacing: 0.14em; }
 .footer-center { display: flex; gap: 2rem; }
 .footer-right { display: flex; gap: 2rem; }
 .footer-right a { color: var(--muted); text-decoration: none; transition: color 0.2s; cursor: none; }
 .footer-right a:hover { color: var(--accent); }
-.footer-copy { color: var(--muted); }
 
-/* ============================================================
-   ANIMATIONS
-   ============================================================ */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+
+/* FAIXA SOCIAL RODAPÉ */
+.faixa-social-rodape {
+  position: relative; z-index: 3; width: 100%; background: #000; color: #fff;
+  padding: 15px 0; font-family: 'Verdana', sans-serif; font-size: 14px; font-weight: bold;
+  border-top: 4px solid #0055ff; overflow: hidden; display: flex; align-items: center;
 }
+.ticker-move { display: flex; align-items: center; white-space: nowrap; will-change: transform; animation: deslizar-lento 120s linear infinite; }
+.item-noticia { display: flex; align-items: center; padding-right: 15px; text-transform: uppercase; line-height: 1.2; }
+.item-noticia strong { color: #00d9ff; margin-left: 8px; }
+.divisor-diamond { color: #0055ff; margin-right: 80px; font-size: 20px; display: inline-flex; align-items: center; }
+@keyframes deslizar-lento { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
+/* RESPONSIVE */
 @media (max-width: 1024px) {
   .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .manifesto-wrap { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
   .project-featured { grid-template-columns: 1fr; }
   .project-card { grid-template-columns: 1fr; }
@@ -701,21 +485,13 @@ footer {
 </head>
 <body>
 
-<!-- CURSOR -->
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
-<div id="cursor-dot"></div>
 
-<!-- CANVAS BG -->
 <canvas id="bg-canvas"></canvas>
-
-<!-- OVERLAYS -->
 <div class="scanlines"></div>
-<div class="noise"></div>
 
-<!-- ============================================================
-     NAV
-     ============================================================ -->
+<!-- NAV -->
 <nav>
   <div class="nav-logo-wrap">
     <a href="#hero" class="nav-logo">
@@ -733,9 +509,7 @@ footer {
   </ul>
 </nav>
 
-<!-- ============================================================
-     HERO
-     ============================================================ -->
+<!-- HERO -->
 <section id="hero">
   <div class="hero-grid">
     <div class="hero-left">
@@ -749,8 +523,8 @@ footer {
       </h1>
       <div class="hero-subtitle">FullStark // Arquiteto de Sistemas</div>
       <p class="hero-desc">
-        Desenvolvedor full-stack e arquiteto de sistemas de alto impacto. 
-        Especializado em infraestrutura, segurança ofensiva, plataformas de gaming 
+        Desenvolvedor full-stack e arquiteto de sistemas de alto impacto.
+        Especializado em infraestrutura, segurança ofensiva, plataformas de gaming
         e soluções digitais que operam no limite da performance.
         Do conceito ao deploy — sem meio-termo.
       </p>
@@ -796,7 +570,7 @@ footer {
         </div>
         <div class="status-item">
           <span class="status-key">Projetos</span>
-          <span class="status-val">6 Ativos</span>
+          <span class="status-val">7 Ativos</span>
         </div>
         <div class="status-item">
           <span class="status-key">Stack</span>
@@ -819,9 +593,7 @@ footer {
   </div>
 </section>
 
-<!-- ============================================================
-     MANIFESTO
-     ============================================================ -->
+<!-- MANIFESTO -->
 <section id="manifesto">
   <div class="container">
     <div class="section-header scroll-reveal">
@@ -829,24 +601,20 @@ footer {
       <h2 class="section-title">Manifesto</h2>
       <div class="section-line"></div>
     </div>
-    <div class="manifesto-wrap">
-      <div class="manifesto-text scroll-reveal">
-        <strong>Construo sistemas que outros apenas imaginam.</strong> Não existe 
-        projeto impossível — existe escopo mal definido. Cada linha de código que 
-        escrevo carrega uma intenção: <em>performance, segurança e resultado</em>.<br><br>
-        Enquanto a maioria <strong>copia soluções</strong>, eu projeto as minhas do zero. 
-        Arquiteturas de servidor, infraestrutura de rede, plataformas de gaming, 
-        sistemas embarcados — <em>não há fronteira entre o que sei e o que aprendo</em>.<br><br>
-        Do terminal ao deploy, do hardware ao frontend, do pentest ao produto final: 
-        <strong>esse é o escopo de operação do FullStark.</strong>
-      </div>
+    <div class="manifesto-text scroll-reveal">
+      <strong>Construo sistemas que outros apenas imaginam.</strong> Não existe
+      projeto impossível — existe escopo mal definido. Cada linha de código que
+      escrevo carrega uma intenção: <em>performance, segurança e resultado</em>.<br><br>
+      Enquanto a maioria <strong>copia soluções</strong>, eu projeto as minhas do zero.
+      Arquiteturas de servidor, infraestrutura de rede, plataformas de gaming,
+      sistemas embarcados — <em>não há fronteira entre o que sei e o que aprendo</em>.<br><br>
+      Do terminal ao deploy, do hardware ao frontend, do pentest ao produto final:
+      <strong>esse é o escopo de operação do FullStark.</strong>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     SKILLS
-     ============================================================ -->
+<!-- SKILLS -->
 <section id="skills">
   <div class="container">
     <div class="section-header scroll-reveal">
@@ -857,294 +625,85 @@ footer {
 
     <div class="skills-tabs">
       <button class="tab-btn active" data-tab="languages">Linguagens</button>
-      <button class="tab-btn" data-tab="systems">Sistemas & Tools</button>
+      <button class="tab-btn" data-tab="systems">Sistemas &amp; Tools</button>
       <button class="tab-btn" data-tab="levels">Proficiência</button>
       <button class="tab-btn" data-tab="security">Segurança</button>
     </div>
 
-    <!-- TAB: LANGUAGES -->
     <div class="tab-content active" id="tab-languages">
       <div class="skills-icon-grid">
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
-          <span>Python</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
-          <span>JavaScript</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript">
-          <span>TypeScript</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
-          <span>Java</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++">
-          <span>C++</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C">
-          <span>C</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg" alt="Rust" style="filter:invert(1) drop-shadow(0 0 5px rgba(0,255,231,0.4));">
-          <span>Rust</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go">
-          <span>Go</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
-          <span>PHP</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
-          <span>HTML5</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
-          <span>CSS3</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" alt="Swift">
-          <span>Swift</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" style="filter:drop-shadow(0 0 5px rgba(0,255,231,0.4)) invert(0.8);">
-          <span>Bash</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lua/lua-original.svg" alt="Lua">
-          <span>Lua</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" alt="Kotlin">
-          <span>Kotlin</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
-          <span>React</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
-          <span>Node.js</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://scratch.mit.edu/favicon.ico" alt="Scratch">
-          <span>Scratch</span>
-        </div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript"><span>JavaScript</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript"><span>TypeScript</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"><span>Java</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"><span>C++</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C"><span>C</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg" alt="Rust" style="filter:invert(1) drop-shadow(0 0 5px rgba(0,255,231,0.4));"><span>Rust</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go"><span>Go</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP"><span>PHP</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5"><span>HTML5</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3"><span>CSS3</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" alt="Swift"><span>Swift</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" style="filter:drop-shadow(0 0 5px rgba(0,255,231,0.4)) invert(0.8);"><span>Bash</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lua/lua-original.svg" alt="Lua"><span>Lua</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" alt="Kotlin"><span>Kotlin</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"><span>React</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js"><span>Node.js</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://scratch.mit.edu/favicon.ico" alt="Scratch"><span>Scratch</span></div>
       </div>
     </div>
 
-    <!-- TAB: SYSTEMS -->
     <div class="tab-content" id="tab-systems">
       <div class="skills-icon-grid">
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://www.kali.org/images/kali-logo.svg" alt="Kali Linux">
-          <span>Kali Linux</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux">
-          <span>Linux</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://raw.githubusercontent.com/termux/termux-app/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="Termux">
-          <span>Termux</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
-          <span>Docker</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="Nginx">
-          <span>Nginx</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
-          <span>MySQL</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
-          <span>PostgreSQL</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis">
-          <span>Redis</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" style="filter:drop-shadow(0 0 6px rgba(0,255,231,0.5)) invert(1)">
-          <span>GitHub</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code">
-          <span>VS Code</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender">
-          <span>Blender</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/codepen/codepen-original.svg" alt="Codepen" style="filter:drop-shadow(0 0 6px rgba(0,255,231,0.5)) invert(1)">
-          <span>Codepen</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
-          <span>MongoDB</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://acode.foxdebug.com/favicon.ico" alt="Acode">
-          <span>Acode</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
-          <span>Git</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" alt="Firebase">
-          <span>Firebase</span>
-        </div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://www.kali.org/images/kali-logo.svg" alt="Kali Linux"><span>Kali Linux</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"><span>Linux</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://raw.githubusercontent.com/termux/termux-app/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="Termux"><span>Termux</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="Nginx"><span>Nginx</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"><span>MySQL</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span>PostgreSQL</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="Redis"><span>Redis</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" style="filter:drop-shadow(0 0 6px rgba(0,255,231,0.5)) invert(1)"><span>GitHub</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code"><span>VS Code</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" alt="Blender"><span>Blender</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"><span>MongoDB</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"><span>Git</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" alt="Firebase"><span>Firebase</span></div>
       </div>
     </div>
 
-    <!-- TAB: LEVELS -->
     <div class="tab-content" id="tab-levels">
       <div class="skill-bar-grid">
-        <div class="skill-bar-item scroll-reveal">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Python</span>
-            <span class="skill-bar-pct">92%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill c1" data-width="92"></div></div>
-        </div>
-        <div class="skill-bar-item scroll-reveal">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">JavaScript / TS</span>
-            <span class="skill-bar-pct">88%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill c2" data-width="88"></div></div>
-        </div>
-        <div class="skill-bar-item scroll-reveal">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Cyber Security</span>
-            <span class="skill-bar-pct">85%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill c1" data-width="85"></div></div>
-        </div>
-        <div class="skill-bar-item scroll-reveal">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Linux / Sysadmin</span>
-            <span class="skill-bar-pct">90%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill c3" data-width="90"></div></div>
-        </div>
-        <div class="skill-bar-item scroll-reveal">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Lua / SAMP Pawn</span>
-            <span class="skill-bar-pct">80%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill c2" data-width="80"></div></div>
-        </div>
-        <div class="skill-bar-item scroll-reveal">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Java / Minecraft</span>
-            <span class="skill-bar-pct">83%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill c1" data-width="83"></div></div>
-        </div>
-        <div class="skill-bar-item scroll-reveal">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Blender 3D</span>
-            <span class="skill-bar-pct">75%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill c3" data-width="75"></div></div>
-        </div>
-        <div class="skill-bar-item scroll-reveal">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Docker / Infra</span>
-            <span class="skill-bar-pct">78%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill c2" data-width="78"></div></div>
-        </div>
-        <div class="skill-bar-item scroll-reveal">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">HTML / CSS</span>
-            <span class="skill-bar-pct">95%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill c1" data-width="95"></div></div>
-        </div>
-        <div class="skill-bar-item scroll-reveal">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Hardware Hacking</span>
-            <span class="skill-bar-pct">70%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill c3" data-width="70"></div></div>
-        </div>
+        <div class="skill-bar-item scroll-reveal"><div class="skill-bar-header"><span class="skill-bar-name">Python</span><span class="skill-bar-pct">92%</span></div><div class="skill-bar-track"><div class="skill-bar-fill c1" data-width="92"></div></div></div>
+        <div class="skill-bar-item scroll-reveal"><div class="skill-bar-header"><span class="skill-bar-name">JavaScript / TS</span><span class="skill-bar-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill c2" data-width="88"></div></div></div>
+        <div class="skill-bar-item scroll-reveal"><div class="skill-bar-header"><span class="skill-bar-name">Cyber Security</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill c1" data-width="85"></div></div></div>
+        <div class="skill-bar-item scroll-reveal"><div class="skill-bar-header"><span class="skill-bar-name">Linux / Sysadmin</span><span class="skill-bar-pct">90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill c3" data-width="90"></div></div></div>
+        <div class="skill-bar-item scroll-reveal"><div class="skill-bar-header"><span class="skill-bar-name">Lua / SAMP Pawn</span><span class="skill-bar-pct">80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill c2" data-width="80"></div></div></div>
+        <div class="skill-bar-item scroll-reveal"><div class="skill-bar-header"><span class="skill-bar-name">Java / Minecraft</span><span class="skill-bar-pct">83%</span></div><div class="skill-bar-track"><div class="skill-bar-fill c1" data-width="83"></div></div></div>
+        <div class="skill-bar-item scroll-reveal"><div class="skill-bar-header"><span class="skill-bar-name">Blender 3D</span><span class="skill-bar-pct">75%</span></div><div class="skill-bar-track"><div class="skill-bar-fill c3" data-width="75"></div></div></div>
+        <div class="skill-bar-item scroll-reveal"><div class="skill-bar-header"><span class="skill-bar-name">Docker / Infra</span><span class="skill-bar-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill c2" data-width="78"></div></div></div>
+        <div class="skill-bar-item scroll-reveal"><div class="skill-bar-header"><span class="skill-bar-name">HTML / CSS</span><span class="skill-bar-pct">95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill c1" data-width="95"></div></div></div>
+        <div class="skill-bar-item scroll-reveal"><div class="skill-bar-header"><span class="skill-bar-name">Hardware Hacking</span><span class="skill-bar-pct">70%</span></div><div class="skill-bar-track"><div class="skill-bar-fill c3" data-width="70"></div></div></div>
       </div>
     </div>
 
-    <!-- TAB: SECURITY -->
     <div class="tab-content" id="tab-security">
       <div class="skills-icon-grid">
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://www.kali.org/images/kali-logo.svg" alt="Kali">
-          <span>Kali Linux</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash Scripts" style="filter:invert(0.8) drop-shadow(0 0 5px rgba(255,60,110,0.5));">
-          <span>Bash Scripts</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://camo.githubusercontent.com/f2f4abe2b648e1d3e4192e93f73c4985b8b97001d3e757b179bd88142fc58f9d/68747470733a2f2f7468756d622e74696c646163646e2e636f6d2f74696c64333333322d333833392d343036312d623636332d3336333436343330333433322f2d2f726573697a652f323134782f2d2f666f726d61742f776562702f6e6f726f6f742e706e67" alt="Flipper Zero" style="border-radius:4px;">
-          <span>Flipper Zero</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Exploit Dev">
-          <span>Exploit Dev</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://www.wireshark.org/assets/theme-2015/images/wireshark_logo.png" alt="Wireshark" style="object-fit:contain;">
-          <span>Wireshark</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Nmap">
-          <span>Nmap / Ncat</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ssh/ssh-original-wordmark.svg" alt="SSH Tunneling" style="filter:invert(0.8);">
-          <span>SSH Tunnel</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Container Sec">
-          <span>Container Sec</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://www.svgrepo.com/show/349423/metasploit.svg" alt="Metasploit" style="filter:drop-shadow(0 0 5px rgba(255,60,110,0.5));" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'">
-          <span>Metasploit</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="Firewall / Proxy">
-          <span>Firewall / Proxy</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://raw.githubusercontent.com/termux/termux-app/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="Termux">
-          <span>Termux Hacks</span>
-        </div>
-        <div class="skill-icon-item scroll-reveal">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="OSINT" style="filter:invert(1) drop-shadow(0 0 5px rgba(255,60,110,0.4));">
-          <span>OSINT</span>
-        </div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://www.kali.org/images/kali-logo.svg" alt="Kali"><span>Kali Linux</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash Scripts" style="filter:invert(0.8) drop-shadow(0 0 5px rgba(255,60,110,0.5));"><span>Bash Scripts</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Exploit Dev"><span>Exploit Dev</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://www.wireshark.org/assets/theme-2015/images/wireshark_logo.png" alt="Wireshark" style="object-fit:contain;"><span>Wireshark</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Nmap"><span>Nmap / Ncat</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Container Sec"><span>Container Sec</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="Firewall / Proxy"><span>Firewall / Proxy</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://raw.githubusercontent.com/termux/termux-app/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="Termux"><span>Termux Hacks</span></div>
+        <div class="skill-icon-item scroll-reveal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="OSINT" style="filter:invert(1) drop-shadow(0 0 5px rgba(255,60,110,0.4));"><span>OSINT</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     PROJECTS
-     ============================================================ -->
+<!-- PROJECTS -->
 <section id="projects">
   <div class="container">
     <div class="section-header scroll-reveal">
@@ -1163,11 +722,11 @@ footer {
           <div class="project-badge" style="margin-bottom:1rem;">NETWORKING HUB</div>
           <div class="project-name">NetworkBrak</div>
           <p class="project-desc">
-            Hub de elite para eventos e networking tecnológico de alto impacto. 
-            Plataforma especializada em conectar profissionais da indústria em eventos de 
-            tecnologia de ponta. Sistema de matchmaking, agenda de eventos, perfis verificados 
+            Hub de elite para eventos e networking tecnológico de alto impacto.
+            Plataforma especializada em conectar profissionais da indústria em eventos de
+            tecnologia de ponta. Sistema de matchmaking, agenda de eventos, perfis verificados
             e uma engine de recomendação que conecta pessoas pelo stack técnico.
-            Arquitetura serverless com CDN edge, WebSocket em tempo real e autenticação multi-fator.
+            Arquitetura serverless com CDN edge, WebSocket em tempo real e autenticação multifator.
           </p>
           <div class="project-tags">
             <span class="project-tag">Node.js</span>
@@ -1244,7 +803,7 @@ footer {
         </div>
         <div class="project-main-col">
           <div class="project-name">SMT Server</div>
-          <p class="project-desc">Servidor Minecraft de alta performance com +80 plugins customizados em Java, arquitetura multi-thread otimizada, sistema de economy, crates, pvp ranqueado e suporte estável para 400+ jogadores simultâneos sem degradação de performance. Anti-cheat proprietário e painel de administração web.</p>
+          <p class="project-desc">Servidor Minecraft de alta performance com +80 plugins customizados em Java, arquitetura multithread otimizada, sistema de economy, crates, pvp ranqueado e suporte estável para 400+ jogadores simultâneos sem degradação de performance. Anti-cheat proprietário e painel de administração web.</p>
           <div class="project-tags">
             <span class="project-tag">Java</span>
             <span class="project-tag">Spigot/Paper</span>
@@ -1282,6 +841,30 @@ footer {
         </div>
       </div>
 
+      <!-- PROJ 005 — ROBLOX FIGURINHAS COPA -->
+      <div class="project-card gold scroll-reveal">
+        <div class="project-id-col">
+          <div class="project-id">PROJ_005</div>
+          <span class="project-badge gold">ROBLOX</span>
+        </div>
+        <div class="project-main-col">
+          <div class="project-name">Copa Cards — Roblox</div>
+          <p class="project-desc">Jogo de figurinhas da Copa no Roblox com coleção completa de cartas, sistema de pacotes com raridades, álbum digital, trocas entre jogadores em tempo real e ranking de colecionadores. Engine de drops customizada, loja in-game, sistema anti-duplicata inteligente e eventos especiais por temporada. Link do servidor em breve.</p>
+          <div class="project-tags">
+            <span class="project-tag">Roblox Studio</span>
+            <span class="project-tag">Lua</span>
+            <span class="project-tag">DataStore</span>
+            <span class="project-tag">Trading System</span>
+            <span class="project-tag">Raridades</span>
+            <span class="project-tag">Álbum Digital</span>
+          </div>
+        </div>
+        <div class="project-action-col">
+          <div class="project-stat-chip gold">⚽ Copa · Cards · Trocas</div>
+          <!-- ESPAÇO RESERVADO PARA O LINK DO DISCORD -->
+          <a href="https://discord.gg/LINK_AQUI" target="_blank" class="btn btn-ghost" style="font-size:0.65rem; padding: 0.6rem 1.2rem; border-color: var(--accent4); color: var(--accent4);">Discord →</a>
+        </div>
+      </div>
 
       <!-- PROJ 006 -->
       <div class="project-card purple scroll-reveal">
@@ -1310,9 +893,7 @@ footer {
   </div>
 </section>
 
-<!-- ============================================================
-     FIELD EXPERIENCE
-     ============================================================ -->
+<!-- EXPERIENCE -->
 <section id="experience">
   <div class="container">
     <div class="section-header scroll-reveal">
@@ -1321,60 +902,37 @@ footer {
       <div class="section-line"></div>
     </div>
     <div class="exp-grid">
-
       <div class="exp-card scroll-reveal">
         <div class="exp-icon-wrap">🎨</div>
         <div class="exp-name">Blender 3D Modeling</div>
         <p class="exp-desc">Escultura digital e criação de assets complexos para integração em game engines e projetos visuais de alta fidelidade. Modelagem hard-surface, rigging e render cycles/EEVEE.</p>
-        <div class="exp-skills">
-          <span class="exp-skill">Hard Surface</span>
-          <span class="exp-skill">Rigging</span>
-          <span class="exp-skill">Render</span>
-          <span class="exp-skill">EEVEE</span>
-        </div>
+        <div class="exp-skills"><span class="exp-skill">Hard Surface</span><span class="exp-skill">Rigging</span><span class="exp-skill">Render</span><span class="exp-skill">EEVEE</span></div>
         <span class="exp-tag">3D / ASSETS / ENGINES</span>
       </div>
-
       <div class="exp-card scroll-reveal">
         <div class="exp-icon-wrap">🛡️</div>
         <div class="exp-name">Cyber Segurança</div>
         <p class="exp-desc">Auditorias ofensivas e análise de vulnerabilidades em sistemas de missão crítica. Red team, pentesting e análise de vetores de ataque em redes, aplicações web e sistemas embarcados.</p>
-        <div class="exp-skills">
-          <span class="exp-skill">Red Team</span>
-          <span class="exp-skill">Pentest</span>
-          <span class="exp-skill">CVE Analysis</span>
-          <span class="exp-skill">Exploit Dev</span>
-        </div>
+        <div class="exp-skills"><span class="exp-skill">Red Team</span><span class="exp-skill">Pentest</span><span class="exp-skill">CVE Analysis</span><span class="exp-skill">Exploit Dev</span></div>
         <span class="exp-tag">OFFENSIVE / PENTEST</span>
       </div>
-
       <div class="exp-card scroll-reveal">
         <div class="exp-icon-wrap">📟</div>
         <div class="exp-name">Hardware Hacking</div>
         <p class="exp-desc">Interfaceamento físico e análise de sinais RF. Experiência com Flipper Zero, prototipagem em hardware e engenharia reversa de dispositivos embarcados. Análise de firmware e JTAG.</p>
-        <div class="exp-skills">
-          <span class="exp-skill">Flipper Zero</span>
-          <span class="exp-skill">RF Signals</span>
-          <span class="exp-skill">JTAG</span>
-          <span class="exp-skill">Firmware Rev</span>
-        </div>
+        <div class="exp-skills"><span class="exp-skill">Flipper Zero</span><span class="exp-skill">RF Signals</span><span class="exp-skill">JTAG</span><span class="exp-skill">Firmware Rev</span></div>
         <span class="exp-tag">RF / FLIPPER / PROTO</span>
       </div>
-
-
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     CONTACT
-     ============================================================ -->
+<!-- CONTACT -->
 <section id="contact">
   <div class="container">
     <div class="section-header scroll-reveal">
       <span class="section-num">05 //</span>
-      <h2 class="section-title">Protocolo de 
-      Contato</h2>
+      <h2 class="section-title">Protocolo de Contato</h2>
       <div class="section-line"></div>
     </div>
     <div class="contact-grid">
@@ -1422,14 +980,14 @@ footer {
             <div class="term-out">&nbsp;&nbsp;"tier": <span class="term-highlight">"Elite"</span>,</div>
             <div class="term-out">&nbsp;&nbsp;"rep": <span class="term-hl-green">12400</span>,</div>
             <div class="term-out">&nbsp;&nbsp;"stack": <span class="term-highlight">"Full"</span>,</div>
-            <div class="term-out">&nbsp;&nbsp;"projects": <span class="term-hl-green">6</span>,</div>
+            <div class="term-out">&nbsp;&nbsp;"projects": <span class="term-hl-green">7</span>,</div>
             <div class="term-out">&nbsp;&nbsp;"location": <span class="term-highlight">"Brazil 🇧🇷"</span>,</div>
             <div class="term-out">&nbsp;&nbsp;"status": <span class="term-hl-green">"available"</span>,</div>
             <div class="term-out">&nbsp;&nbsp;"contact": <span class="term-highlight">"63 8125-3078"</span></div>
             <div class="term-out">}</div>
             <br>
             <div class="term-line"><span class="term-prompt">❯</span><span class="term-cmd">ls projetos/</span></div>
-            <div class="term-out"><span class="term-hl-green">brak/</span>&nbsp;&nbsp;<span class="term-highlight">south_rp/</span>&nbsp;&nbsp;<span class="term-hl-green">smt_mc/</span>&nbsp;&nbsp;<span class="term-highlight">ssh_vpn/</span>&nbsp;&nbsp;<span class="term-hl-green">atex_live/</span>&nbsp;&nbsp;<span class="term-highlight">iptv/</span></div>
+            <div class="term-out"><span class="term-hl-green">brak/</span>&nbsp;&nbsp;<span class="term-highlight">south_rp/</span>&nbsp;&nbsp;<span class="term-hl-green">smt_mc/</span>&nbsp;&nbsp;<span class="term-highlight">ssh_vpn/</span>&nbsp;&nbsp;<span class="term-hl-green">copa_cards/</span>&nbsp;&nbsp;<span class="term-highlight">iptv/</span></div>
             <br>
             <div class="term-line"><span class="term-prompt">❯</span><span class="term-cmd">./iniciar_protocolo.sh<span class="term-cursor"></span></span></div>
           </div>
@@ -1439,9 +997,7 @@ footer {
   </div>
 </section>
 
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
+<!-- FOOTER -->
 <footer>
   <span class="footer-logo">SAMUEL MENDES</span>
   <div class="footer-center">
@@ -1449,7 +1005,7 @@ footer {
     <span>//</span>
     <span>SYSTEM ARCHITECT</span>
     <span>//</span>
-    <span>2025</span>
+    <span id="footer-year">2025</span>
   </div>
   <div class="footer-right">
     <a href="https://github.com/samuelllks" target="_blank">GitHub</a>
@@ -1458,67 +1014,51 @@ footer {
   </div>
 </footer>
 
-<!-- ============================================================
-     SCRIPTS
-     ============================================================ -->
+<!-- FAIXA SOCIAL -->
+<div class="faixa-social-rodape">
+  <div class="ticker-move" id="ticker-target"></div>
+</div>
+
 <script>
-/* ----------------------------------------------------------
-   CUSTOM CURSOR
-   ---------------------------------------------------------- */
+/* CURSOR */
 const cursor = document.getElementById('cursor');
 const ring   = document.getElementById('cursor-ring');
-const dot    = document.getElementById('cursor-dot');
-let mx = 0, my = 0, rx = 0, ry = 0, dx = 0, dy = 0;
+let mx = 0, my = 0, rx = 0, ry = 0;
 
 document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
 
 (function animateCursor() {
   rx += (mx - rx) * 0.14;
   ry += (my - ry) * 0.14;
-  dx += (mx - dx) * 0.08;
-  dy += (my - dy) * 0.08;
-  cursor.style.left  = mx + 'px';
-  cursor.style.top   = my + 'px';
-  ring.style.left    = rx + 'px';
-  ring.style.top     = ry + 'px';
-  dot.style.left     = dx + 'px';
-  dot.style.top      = dy + 'px';
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  ring.style.left   = rx + 'px'; ring.style.top   = ry + 'px';
   requestAnimationFrame(animateCursor);
 })();
 
-document.querySelectorAll('a, button, .skill-icon-item, .project-card, .project-featured, .exp-card, .status-item, .manifesto-stat').forEach(el => {
+document.querySelectorAll('a, button, .skill-icon-item, .project-card, .project-featured, .exp-card, .status-item').forEach(el => {
   el.addEventListener('mouseenter', () => {
-    cursor.style.transform  = 'translate(-50%,-50%) scale(2.5)';
+    cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
     cursor.style.background = 'var(--accent2)';
-    ring.style.width        = '58px';
-    ring.style.height       = '58px';
-    ring.style.opacity      = '0.9';
-    ring.style.borderColor  = 'var(--accent2)';
+    ring.style.width = '58px'; ring.style.height = '58px';
+    ring.style.borderColor = 'var(--accent2)';
   });
   el.addEventListener('mouseleave', () => {
-    cursor.style.transform  = 'translate(-50%,-50%) scale(1)';
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
     cursor.style.background = 'var(--accent)';
-    ring.style.width        = '38px';
-    ring.style.height       = '38px';
-    ring.style.opacity      = '0.5';
-    ring.style.borderColor  = 'rgba(0,255,231,0.6)';
+    ring.style.width = '38px'; ring.style.height = '38px';
+    ring.style.borderColor = 'rgba(0,255,231,0.6)';
   });
 });
 
-/* ----------------------------------------------------------
-   CANVAS BACKGROUND — PARTICLE NETWORK
-   ---------------------------------------------------------- */
+/* CANVAS BACKGROUND — PARTICLE NETWORK */
 const canvas = document.getElementById('bg-canvas');
 const ctx    = canvas.getContext('2d');
 let W, H;
 const particles = [];
-const PARTICLE_COUNT = 90;
-const CONNECTION_DIST = 130;
+const PARTICLE_COUNT = 70;
+const CONNECTION_DIST = 120;
 
-function resize() {
-  W = canvas.width  = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
 resize();
 window.addEventListener('resize', resize);
 
@@ -1535,18 +1075,13 @@ class Particle {
   }
   update() {
     this.x += this.vx; this.y += this.vy;
-    if (this.x < 0) this.x = W;
-    if (this.x > W) this.x = 0;
-    if (this.y < 0) this.y = H;
-    if (this.y > H) this.y = 0;
+    if (this.x < 0) this.x = W; if (this.x > W) this.x = 0;
+    if (this.y < 0) this.y = H; if (this.y > H) this.y = 0;
   }
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    const col = this.hue === 'cyan'   ? `rgba(0,255,231,${this.alpha})`
-              : this.hue === 'pink'   ? `rgba(255,60,110,${this.alpha})`
-              : `rgba(123,97,255,${this.alpha})`;
-    ctx.fillStyle = col;
+    ctx.fillStyle = this.hue === 'cyan' ? `rgba(0,255,231,${this.alpha})` : this.hue === 'pink' ? `rgba(255,60,110,${this.alpha})` : `rgba(123,97,255,${this.alpha})`;
     ctx.fill();
   }
 }
@@ -1555,39 +1090,30 @@ for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
 
 function drawParticles() {
   ctx.clearRect(0, 0, W, H);
-
-  // Draw connections
   for (let i = 0; i < particles.length; i++) {
     for (let j = i + 1; j < particles.length; j++) {
       const dx = particles[i].x - particles[j].x;
       const dy = particles[i].y - particles[j].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const dist = Math.sqrt(dx*dx + dy*dy);
       if (dist < CONNECTION_DIST) {
-        const alpha = (1 - dist / CONNECTION_DIST) * 0.35;
         ctx.beginPath();
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `rgba(0,255,231,${alpha})`;
+        ctx.strokeStyle = `rgba(0,255,231,${(1 - dist/CONNECTION_DIST)*0.3})`;
         ctx.lineWidth = 0.6;
         ctx.stroke();
       }
     }
   }
-
-  // Draw and update particles
   particles.forEach(p => { p.update(); p.draw(); });
-
   requestAnimationFrame(drawParticles);
 }
 drawParticles();
 
-/* ----------------------------------------------------------
-   COUNTER ANIMATION
-   ---------------------------------------------------------- */
+/* COUNTER ANIMATION */
 function animateCount(el, target, duration) {
-  const start = 0;
   const increment = target / (duration / 16);
-  let current = start;
+  let current = 0;
   const timer = setInterval(() => {
     current += increment;
     if (current >= target) { current = target; clearInterval(timer); }
@@ -1599,56 +1125,39 @@ const repObs = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       animateCount(document.getElementById('rep-counter'), 12400, 2200);
-      setTimeout(() => {
-        document.getElementById('rep-bar').style.width = '82%';
-      }, 300);
+      setTimeout(() => { document.getElementById('rep-bar').style.width = '82%'; }, 300);
       repObs.disconnect();
     }
   });
 });
 repObs.observe(document.getElementById('rep-counter'));
 
-/* ----------------------------------------------------------
-   SCROLL REVEAL
-   ---------------------------------------------------------- */
+/* SCROLL REVEAL */
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.add('visible');
-      }, i * 70);
+      setTimeout(() => { entry.target.classList.add('visible'); }, i * 70);
     }
   });
 }, { threshold: 0.08 });
-
 document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
 
-/* ----------------------------------------------------------
-   SKILL BARS — ANIMATE ON REVEAL
-   ---------------------------------------------------------- */
+/* SKILL BARS */
 const barObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      const fills = entry.target.querySelectorAll('.skill-bar-fill');
-      fills.forEach(fill => {
+      entry.target.querySelectorAll('.skill-bar-fill').forEach(fill => {
         const width = fill.getAttribute('data-width');
-        if (width) {
-          setTimeout(() => {
-            fill.style.width = width + '%';
-          }, 200);
-        }
+        if (width) setTimeout(() => { fill.style.width = width + '%'; }, 200);
       });
       barObserver.unobserve(entry.target);
     }
   });
 }, { threshold: 0.1 });
-
 const skillLevels = document.getElementById('tab-levels');
 if (skillLevels) barObserver.observe(skillLevels);
 
-/* ----------------------------------------------------------
-   TABS
-   ---------------------------------------------------------- */
+/* TABS */
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1660,319 +1169,94 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
       if (btn.dataset.tab === 'levels') {
         targetTab.querySelectorAll('.skill-bar-fill').forEach(fill => {
           const width = fill.getAttribute('data-width');
-          if (width) {
-            fill.style.width = '0%';
-            setTimeout(() => { fill.style.width = width + '%'; }, 100);
-          }
+          if (width) { fill.style.width = '0%'; setTimeout(() => { fill.style.width = width + '%'; }, 100); }
         });
       }
-      targetTab.querySelectorAll('.scroll-reveal').forEach(el => {
-        el.classList.add('visible');
-      });
+      targetTab.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('visible'));
     }
   });
 });
 
-/* ----------------------------------------------------------
-   NAVBAR — ACTIVE SECTION HIGHLIGHT
-   ---------------------------------------------------------- */
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
-
-const navObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navLinks.forEach(link => {
-        link.style.color = link.getAttribute('href') === '#' + entry.target.id
-          ? 'var(--accent)'
-          : '';
-      });
-    }
-  });
-}, { threshold: 0.4 });
-
-sections.forEach(s => navObserver.observe(s));
-
-/* ----------------------------------------------------------
-   GLITCH RANDOM EFFECT
-   ---------------------------------------------------------- */
-function randomGlitch() {
-  const el = document.querySelector('.hero-name');
-  if (!el) return;
-  el.style.transform = `skewX(${(Math.random() - 0.5) * 1.5}deg)`;
-  setTimeout(() => { el.style.transform = ''; }, 80);
-}
-setInterval(() => {
-  if (Math.random() < 0.15) randomGlitch();
-}, 3000);
-
-/* ----------------------------------------------------------
-   TYPING EFFECT — TERMINAL
-   ---------------------------------------------------------- */
-(function typeTerminal() {
-  const termBox = document.querySelector('.terminal-box');
-  if (!termBox) return;
-
-  const termObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        termBox.style.transition = 'box-shadow 0.5s';
-        termBox.style.boxShadow = '0 0 30px rgba(0,255,231,0.08), inset 0 0 30px rgba(0,0,0,0.5)';
-        termObs.disconnect();
-      }
-    });
-  }, { threshold: 0.5 });
-
-  termObs.observe(termBox);
-})();
-
-/* ----------------------------------------------------------
-   PARALLAX HERO
-   ---------------------------------------------------------- */
-document.addEventListener('mousemove', e => {
-  const cx = window.innerWidth  / 2;
-  const cy = window.innerHeight / 2;
-  const dx = (e.clientX - cx) / cx;
-  const dy = (e.clientY - cy) / cy;
-  const hero = document.querySelector('.hero-left');
-  if (hero) {
-    hero.style.transform = `translate(${dx * 6}px, ${dy * 4}px)`;
-  }
-});
-
-/* ----------------------------------------------------------
-   PROJECT CARD TILT EFFECT
-   ---------------------------------------------------------- */
-document.querySelectorAll('.project-featured, .exp-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const cx = rect.width  / 2;
-    const cy = rect.height / 2;
-    const rotX = (y - cy) / cy * -4;
-    const rotY = (x - cx) / cx *  4;
-    card.style.transform = `perspective(800px) rotateX(\( {rotX}deg) rotateY( \){rotY}deg) translateY(-4px)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-  });
-});
-
-/* ----------------------------------------------------------
-   FOOTER YEAR
-   ---------------------------------------------------------- */
-(function() {
-  const yr = new Date().getFullYear();
-  const footerSpans = document.querySelectorAll('footer span');
-  footerSpans.forEach(s => {
-    if (s.textContent.includes('2025')) {
-      s.textContent = s.textContent.replace('2025', yr);
-    }
-  });
-})();
-
-/* ----------------------------------------------------------
-   NAV SCROLL EFFECT
-   ---------------------------------------------------------- */
+/* NAVBAR SCROLL */
 window.addEventListener('scroll', () => {
   const nav = document.querySelector('nav');
-  if (window.scrollY > 60) {
-    nav.style.background = 'rgba(1,3,5,0.97)';
-    nav.style.borderBottomColor = 'rgba(0,255,231,0.08)';
-  } else {
-    nav.style.background = '';
-    nav.style.borderBottomColor = '';
+  nav.style.background = window.scrollY > 60 ? 'rgba(1,3,5,0.97)' : '';
+});
+
+/* PARALLAX HERO */
+document.addEventListener('mousemove', e => {
+  const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+  const hero = document.querySelector('.hero-left');
+  if (hero) {
+    hero.style.transform = `translate(${(e.clientX - cx) / cx * 6}px, ${(e.clientY - cy) / cy * 4}px)`;
   }
 });
 
-/* ----------------------------------------------------------
-   PARTICLE MOUSE REPEL
-   ---------------------------------------------------------- */
+/* PARTICLE MOUSE REPEL */
 document.addEventListener('mousemove', e => {
   particles.forEach(p => {
-    const dx = p.x - e.clientX;
-    const dy = p.y - e.clientY;
-    const dist = Math.sqrt(dx * dx + dy * dy);
+    const dx = p.x - e.clientX, dy = p.y - e.clientY;
+    const dist = Math.sqrt(dx*dx + dy*dy);
     if (dist < 80) {
       const force = (80 - dist) / 80 * 0.5;
-      p.vx += (dx / dist) * force;
-      p.vy += (dy / dist) * force;
-      const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-      if (speed > 2) { p.vx = (p.vx / speed) * 2; p.vy = (p.vy / speed) * 2; }
+      p.vx += (dx/dist)*force; p.vy += (dy/dist)*force;
+      const speed = Math.sqrt(p.vx*p.vx + p.vy*p.vy);
+      if (speed > 2) { p.vx = (p.vx/speed)*2; p.vy = (p.vy/speed)*2; }
     }
   });
 });
 
-/* ----------------------------------------------------------
-   RANDOM DIGITAL RAIN (subtle background effect)
-   ---------------------------------------------------------- */
-(function digitalRain() {
-  const container = document.body;
-  const chars = '01アイウエオカキクケコ01サシスセソタチツテト01ナニヌネノハヒフヘホ01マミムメモ';
+/* GLITCH */
+setInterval(() => { if (Math.random() < 0.15) { const el = document.querySelector('.hero-name'); if (el) { el.style.transform = `skewX(${(Math.random()-0.5)*1.5}deg)`; setTimeout(() => { el.style.transform = ''; }, 80); } } }, 3000);
 
-  function spawnChar() {
+/* DIGITAL RAIN */
+(function digitalRain() {
+  const chars = '01アイウエオカキクケコ01サシスセソ';
+  const style = document.createElement('style');
+  style.textContent = '@keyframes rain { from{transform:translateY(-20px);opacity:1} to{transform:translateY(110vh);opacity:0} }';
+  document.head.appendChild(style);
+  setInterval(() => {
     const span = document.createElement('span');
     span.textContent = chars[Math.floor(Math.random() * chars.length)];
-    span.style.cssText = `
-      position: fixed;
-      top: -20px;
-      left: ${Math.random() * 100}vw;
-      color: rgba(0,255,231,${Math.random() * 0.08 + 0.02});
-      font-family: 'Share Tech Mono', monospace;
-      font-size: ${Math.random() * 8 + 8}px;
-      pointer-events: none;
-      z-index: 1;
-      animation: rain ${Math.random() * 8 + 6}s linear forwards;
-      letter-spacing: 0.1em;
-    `;
-    container.appendChild(span);
+    span.style.cssText = `position:fixed;top:-20px;left:${Math.random()*100}vw;color:rgba(0,255,231,${Math.random()*0.07+0.02});font-family:'Share Tech Mono',monospace;font-size:${Math.random()*8+8}px;pointer-events:none;z-index:1;animation:rain ${Math.random()*8+6}s linear forwards;`;
+    document.body.appendChild(span);
     setTimeout(() => span.remove(), 14000);
-  }
-
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes rain {
-      from { transform: translateY(-20px); opacity: 1; }
-      to   { transform: translateY(110vh);  opacity: 0; }
-    }
-  `;
-  document.head.appendChild(style);
-
-  setInterval(spawnChar, 400);
+  }, 500);
 })();
 
-/* ----------------------------------------------------------
-   CONSOLE EASTER EGG
-   ---------------------------------------------------------- */
-console.log(`%c
-███████╗██╗   ██╗██╗     ██╗     ███████╗████████╗ █████╗ ██████╗ ██╗  ██╗
-██╔════╝██║   ██║██║     ██║     ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██║ ██╔╝
-█████╗  ██║   ██║██║     ██║     ███████╗   ██║   ███████║██████╔╝█████╔╝ 
-██╔══╝  ██║   ██║██║     ██║     ╚════██║   ██║   ██╔══██║██╔══██╗██╔═██╗ 
-██║     ╚██████╔╝███████╗███████╗███████║   ██║   ██║  ██║██║  ██║██║  ██╗
-╚═╝      ╚═════╝ ╚══════╝╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+/* FOOTER YEAR */
+document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-SAMUEL MENDES // SYSTEM ARCHITECT // FULLSTARK
-Você está inspecionando o código? Bem-vindo ao rabbit hole.
-contato: 63 8125-3078
-`, 'color: #00ffe7; font-size: 8px; font-family: monospace;');
+/* FAIXA SOCIAL */
+const listaCompleta = [
+  "PARE DE FUMAR: Preserve sua saúde e a de quem você ama. Ligue: <strong>136</strong>",
+  "PRECISA CONVERSAR? O CVV atende 24h por dia. Ligue: <strong>188</strong>",
+  "EXPLORAÇÃO SEXUAL É CRIME: Proteja nossas crianças. Denuncie: <strong>DISQUE 100</strong>",
+  "INTERNET SEGURA: Monitore o acesso de menores. Combata o assédio!",
+  "MAUS-TRATOS AOS ANIMAIS: Agredir animais é crime! Denuncie: <strong>190</strong>",
+  "VIOLÊNCIA DOMÉSTICA: Não se cale. Ajuda para mulheres e idosos. Ligue: <strong>180</strong>",
+  "RACISMO É CRIME: Respeite a todos. Discriminação não será tolerada!",
+  "SAÚDE MENTAL: Depressão não é frescura. Procure apoio no CAPS.",
+  "DOAÇÃO DE SANGUE: Um gesto salva até 4 vidas. Vá ao Hemocentro!",
+  "TRABALHO ESCRAVO: Diga não à exploração. Denuncie no <strong>DISQUE 100</strong>",
+  "INCLUSÃO: O mundo deve ser acessível para todos (PCD). Respeite!",
+  "GOLPES DIGITAIS: Cuidado com links suspeitos e pedidos de PIX.",
+  "LGBTQIA+ FOBIA: O preconceito mata. Respeito é lei.",
+  "MEIO AMBIENTE: O descarte correto de lixo salva o planeta.",
+  "BULLYING NAS ESCOLAS: Eduque para a empatia. Diga não à violência.",
+  "PROTEÇÃO AO IDOSO: Abandono é crime. Denuncie: <strong>DISQUE 100</strong>"
+];
 
+(function iniciarFaixa() {
+  const container = document.getElementById('ticker-target');
+  if (!container) return;
+  const embaralhado = [...listaCompleta].sort(() => Math.random() - 0.5);
+  const conteudo = embaralhado.map(txt => `<div class="item-noticia">${txt}</div><span class="divisor-diamond">❖</span>`).join('');
+  container.innerHTML = conteudo + conteudo;
+})();
+
+/* CONSOLE EASTER EGG */
+console.log('%cSAMUEL MENDES // SYSTEM ARCHITECT // FULLSTARK\ncontato: 63 8125-3078', 'color: #00ffe7; font-size: 12px; font-family: monospace;');
 </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rodapé Ajustado</title>
-    <style>
-        /* Ajuste do Body para não comer o topo */
-        html, body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh; /* Garante que o corpo tenha no mínimo a altura da tela */
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* O conteúdo do seu site respira aqui */
-        .conteudo-principal {
-            flex: 1 0 auto; /* Ocupa o espaço necessário sem encolher o topo */
-        }
-
-        /* CONFIGURAÇÃO DA FAIXA */
-        .faixa-social-rodape {
-            flex-shrink: 0; /* Impede que a faixa diminua de tamanho */
-            width: 100%;
-            background: #000;
-            color: #fff;
-            padding: 15px 0;
-            font-family: 'Verdana', sans-serif;
-            font-size: 14px;
-            font-weight: bold;
-            border-top: 4px solid #0055ff; 
-            overflow: hidden;
-            display: flex;
-            align-items: center; /* Alinha verticalmente */
-        }
-
-        .ticker-move {
-            display: flex;
-            align-items: center; /* Alinha ícones e textos no centro da faixa */
-            white-space: nowrap;
-            will-change: transform; 
-            animation: deslizar-lento 120s linear infinite;
-        }
-
-        .item-noticia {
-            display: flex;
-            align-items: center; 
-            padding-right: 15px; /* Espaço entre texto e diamante */
-            text-transform: uppercase;
-            line-height: 1.2;
-        }
-
-        .item-noticia strong {
-            color: #00d9ff; 
-            margin-left: 8px;
-        }
-
-        .divisor-diamond {
-            color: #0055ff; 
-            margin-right: 80px; /* Espaço após o diamante */
-            font-size: 20px;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        @keyframes deslizar-lento {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="conteudo-principal">
-        </div>
-
-    <div class="faixa-social-rodape">
-        <div class="ticker-move" id="ticker-target"></div>
-    </div>
-
-    <script>
-        const listaCompleta = [
-            "PARE DE FUMAR: Preserve sua saúde e a de quem você ama. Ligue: <strong>136</strong>",
-            "PRECISA CONVERSAR? O CVV atende 24h por dia. Ligue: <strong>188</strong>",
-            "EXPLORAÇÃO SEXUAL É CRIME: Proteja nossas crianças. Denuncie: <strong>DISQUE 100</strong>",
-            "INTERNET SEGURA: Monitore o acesso de menores. Combata o assédio!",
-            "MAUS-TRATOS AOS ANIMAIS: Agredir animais é crime! Denuncie: <strong>190</strong>",
-            "VIOLÊNCIA DOMÉSTICA: Não se cale. Ajuda para mulheres e idosos. Ligue: <strong>180</strong>",
-            "RACISMO É CRIME: Respeite a todos. Discriminação não será tolerada!",
-            "SAÚDE MENTAL: Depressão não é frescura. Procure apoio no CAPS.",
-            "DOAÇÃO DE SANGUE: Um gesto salva até 4 vidas. Vá ao Hemocentro!",
-            "TRABALHO ESCRAVO: Diga não à exploração. Denuncie no <strong>DISQUE 100</strong>",
-            "INCLUSÃO: O mundo deve ser acessível para todos (PCD). Respeite!",
-            "GOLPES DIGITAIS: Cuidado com links suspeitos e pedidos de PIX.",
-            "LGBTQIA+ FOBIA: O preconceito mata. Respeito é lei.",
-            "MEIO AMBIENTE: O descarte correto de lixo salva o planeta.",
-            "BULLYING NAS ESCOLAS: Eduque para a empatia. Diga não à violência.",
-            "PROTEÇÃO AO IDOSO: Abandono é crime. Denuncie: <strong>DISQUE 100</strong>"
-        ];
-
-        function iniciarFaixa() {
-            const container = document.getElementById('ticker-target');
-            if(!container) return;
-            const embaralhado = [...listaCompleta].sort(() => Math.random() - 0.5);
-            const conteudo = embaralhado.map(txt => 
-                `<div class="item-noticia">${txt}</div><span class="divisor-diamond">❖</span>`
-            ).join('');
-            container.innerHTML = conteudo + conteudo;
-        }
-        window.onload = iniciarFaixa;
-    </script>
-
 </body>
 </html>
